@@ -1,0 +1,38 @@
+{
+  "name": "plaid-developer-tools",
+  "displayName": "Plaid Developer Tools",
+  "version": "0.1.0",
+  "description": "Plaid API integration for fintech developers using Cursor, Claude Code, and MCP-compatible editors. 17 skills covering Link setup, transaction sync, webhooks, sandbox testing, category mapping, error handling, API reference, institution search, account verification, investments, identity, recurring detection, migration, security, React integration, Next.js integration, and production readiness - plus 7 rules. Companion MCP server provides 30 tools for live Plaid sandbox interaction.",
+  "author": {
+    "name": "TMHSDigital",
+    "url": "https://github.com/TMHSDigital"
+  },
+  "homepage": "https://github.com/TMHSDigital/Plaid-Developer-Tools",
+  "repository": "https://github.com/TMHSDigital/Plaid-Developer-Tools",
+  "license": "CC-BY-NC-ND-4.0",
+  "keywords": [
+    "plaid",
+    "fintech",
+    "banking",
+    "transactions",
+    "plaid-link",
+    "webhooks",
+    "sandbox",
+    "open-banking",
+    "payments",
+    "account-verification",
+    "investments",
+    "identity",
+    "mcp",
+    "cursor-plugin"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "plaid",
+    "fintech",
+    "api"
+  ],
+  "logo": "assets/logo.png",
+  "skills": "./skills/",
+  "rules": "./rules/"
+}

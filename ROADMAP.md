@@ -1,0 +1,26 @@
+# Roadmap
+
+**Current:** v0.1.0
+
+| Version | Theme | Skills | Rules | MCP Tools | Highlights | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| v0.1.0 (current) | Foundation | 6 | 3 | 0 | Core skills, secret/env/error rules, plugin scaffold, CI, docs | **Current** |
+| v0.2.0 | Live Data | +2 | +1 | 8 | MCP server read-only tools, API reference skill, institution search skill, webhook security rule | Planned |
+| v0.3.0 | Sandbox Power | +1 | +1 | +6 | 6 sandbox MCP tools, sandbox testing enhancements, sync cursor rule | Planned |
+| v0.4.0 | Full API | +2 | +1 | +6 | Account verification, investment tracking, link best practices rule | Planned |
+| v0.5.0 | Advanced | +2 | +1 | +5 | Identity verification, recurring detection, token storage rule | Planned |
+| v0.6.0 | Framework Integration | +2 | 0 | +3 | React integration, Next.js integration, webhook tools | Planned |
+| v0.7.0 | Ship It | +2 | 0 | +2 | Migration guide, production readiness, utility tools | Planned |
+| v1.0.0 | Stable | 17 | 7 | 30 | Final polish, all docs, comprehensive test suite, npm publish | Planned |
+
+## Completed
+
+- [x] `plaid-link-setup` added in v0.1.0
+- [x] `plaid-transaction-sync` added in v0.1.0
+- [x] `plaid-webhook-handling` added in v0.1.0
+- [x] `plaid-sandbox-testing` added in v0.1.0
+- [x] `plaid-category-mapping` added in v0.1.0
+- [x] `plaid-error-handling` added in v0.1.0
+- [x] `plaid-secrets` added in v0.1.0
+- [x] `plaid-error-handling` rule added in v0.1.0
+- [x] `plaid-env-safety` added in v0.1.0

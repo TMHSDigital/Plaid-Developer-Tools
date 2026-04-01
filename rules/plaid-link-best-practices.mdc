@@ -1,0 +1,36 @@
+---
+description: Flag common Plaid Link integration issues including missing onExit handler, no error callback, hardcoded products array, and missing OAuth support. Coming in v0.4.0.
+alwaysApply: false
+globs:
+  - "**/*plaid*link*.tsx"
+  - "**/*plaid*link*.jsx"
+  - "**/*plaid*link*.ts"
+  - "**/*plaid*link*.js"
+  - "**/*PlaidLink*"
+---
+
+# Plaid Link Best Practices
+
+> **Coming in v0.4.0** - This rule will enforce Plaid Link integration best practices.
+
+When reviewing Plaid Link integration code, enforce proper callback handling and configuration:
+
+## Patterns to Flag
+
+1. **Missing onExit handler** - `usePlaidLink` or `PlaidLink` without an `onExit` callback. Users who close Link without completing need graceful handling.
+
+2. **No error handling in onSuccess** - `onSuccess` callbacks that don't handle the async token exchange failing. The public token exchange can fail even after a successful Link session.
+
+3. **Hardcoded products array** - products passed directly as string literals instead of using the `Products` enum or a configuration-driven approach.
+
+4. **Missing OAuth support** - Link token creation without `redirect_uri` when targeting institutions that require OAuth (Chase, Wells Fargo, Capital One, etc.).
+
+5. **Link token created in component** - `linkTokenCreate` called inside a React component or `useEffect` without proper caching or state management.
+
+## What to Do
+
+- Always implement both `onSuccess` and `onExit` callbacks
+- Handle token exchange failures in `onSuccess`
+- Use configuration-driven products selection
+- Add `redirect_uri` for OAuth institution support
+- Pre-fetch Link tokens and cache until expiration

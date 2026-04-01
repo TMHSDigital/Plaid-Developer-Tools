@@ -1,0 +1,46 @@
+---
+description: Prevent sandbox or development Plaid credentials from being used in production environments. Flag environment mismatches, missing PLAID_ENV validation, and hardcoded environment URLs.
+alwaysApply: false
+globs:
+  - "**/.env*"
+  - "**/config.*"
+  - "**/*.config.*"
+  - "**/plaid.*"
+  - "**/env.*"
+---
+
+# Plaid Environment Safety
+
+When reviewing environment files and configuration, enforce proper environment separation:
+
+## Patterns to Flag
+
+1. **Sandbox credentials in production config** - if a file named `.env.production`, `config.production.*`, or similar contains `sandbox` in a Plaid context (e.g. `PLAID_ENV=sandbox`, `PlaidEnvironments.sandbox`, `https://sandbox.plaid.com`).
+
+2. **Missing PLAID_ENV variable** - if the file references `PLAID_CLIENT_ID` and `PLAID_SECRET` but does not define or validate `PLAID_ENV`, flag it. The environment must be explicitly set to `sandbox`, `development`, or `production`.
+
+3. **Hardcoded Plaid base URLs** - flag `https://sandbox.plaid.com`, `https://development.plaid.com`, or `https://production.plaid.com` hardcoded in source files. Use `PlaidEnvironments[process.env.PLAID_ENV]` instead.
+
+4. **Mixed environment credentials** - if a single config file contains both sandbox and production secrets, flag it. Each environment should have its own isolated credentials.
+
+5. **Production secret in sandbox config** - production secrets should never appear in sandbox or development env files. Cross-contamination creates security risks.
+
+## What to Do
+
+When these patterns are detected:
+
+- **Warn about environment mismatch**: "This appears to use sandbox credentials in a production context (or vice versa)."
+- **Suggest using PLAID_ENV**: set `PLAID_ENV=sandbox|development|production` and derive the base URL from it
+- **Recommend separate .env files**: `.env.sandbox`, `.env.development`, `.env.production`
+- **Add runtime validation**: check `PLAID_ENV` at startup and fail fast if it's missing or invalid
+
+## Example Validation
+
+```typescript
+const VALID_ENVS = ["sandbox", "development", "production"] as const;
+const plaidEnv = process.env.PLAID_ENV;
+
+if (!plaidEnv || !VALID_ENVS.includes(plaidEnv as any)) {
+  throw new Error(`Invalid PLAID_ENV: "${plaidEnv}". Must be one of: ${VALID_ENVS.join(", ")}`);
+}
+```

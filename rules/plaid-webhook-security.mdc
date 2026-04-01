@@ -1,0 +1,34 @@
+---
+description: Flag missing webhook signature verification, unvalidated webhook payloads, and insecure webhook endpoint patterns in Plaid integrations. Coming in v0.2.0.
+alwaysApply: false
+globs:
+  - "**/webhook*.ts"
+  - "**/webhook*.js"
+  - "**/webhook*.tsx"
+  - "**/webhook*.jsx"
+  - "**/*plaid*webhook*"
+---
+
+# Plaid Webhook Security
+
+> **Coming in v0.2.0** - This rule will provide comprehensive webhook security enforcement.
+
+When reviewing webhook handler files for Plaid integrations, enforce signature verification and secure processing:
+
+## Patterns to Flag
+
+1. **Missing webhook verification** - webhook handlers that process `webhook_type` and `webhook_code` without first verifying the `plaid-verification` header using Plaid's JWK-based signature verification.
+
+2. **No signature validation** - POST route handlers that accept Plaid webhook payloads without calling `webhookVerificationKeyGet` and validating the JWT signature.
+
+3. **Trusting unverified payloads** - using `req.body.item_id`, `req.body.webhook_code`, or other payload fields to trigger database operations or API calls without first verifying the webhook signature.
+
+4. **Missing body hash comparison** - verifying the JWT but not comparing the `request_body_sha256` claim against the actual request body hash.
+
+## What to Do
+
+- Implement full webhook verification before processing any payload data
+- Use the `plaid-verification` header to extract the signed JWT
+- Fetch the verification key using `webhookVerificationKeyGet`
+- Verify both the JWT signature and the body hash
+- Return 200 immediately, process asynchronously

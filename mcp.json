@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "plaid": {
+      "command": "node",
+      "args": ["mcp-server/dist/index.js"],
+      "env": {
+        "PLAID_CLIENT_ID": "${PLAID_CLIENT_ID}",
+        "PLAID_SECRET": "${PLAID_SECRET}",
+        "PLAID_ENV": "${PLAID_ENV}"
+      }
+    }
+  }
+}

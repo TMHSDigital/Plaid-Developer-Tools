@@ -1,0 +1,48 @@
+{
+  "name": "@tmhs/plaid-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Plaid API integration - 30 tools for sandbox testing, transactions, accounts, institutions, categories, investments, identity, webhooks, and more.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "plaid-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "plaid": "^28.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "license": "CC-BY-NC-ND-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TMHSDigital/Plaid-Developer-Tools.git",
+    "directory": "mcp-server"
+  },
+  "homepage": "https://github.com/TMHSDigital/Plaid-Developer-Tools",
+  "bugs": {
+    "url": "https://github.com/TMHSDigital/Plaid-Developer-Tools/issues"
+  },
+  "author": "TMHSDigital"
+}

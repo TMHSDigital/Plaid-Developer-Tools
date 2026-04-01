@@ -1,0 +1,32 @@
+---
+description: Flag transaction sync implementations that don't persist cursors, miss the has_more loop, or risk losing cursor state between sync calls. Coming in v0.3.0.
+alwaysApply: false
+globs:
+  - "**/*sync*.ts"
+  - "**/*sync*.js"
+  - "**/*transaction*.ts"
+  - "**/*transaction*.js"
+---
+
+# Plaid Sync Cursor Persistence
+
+> **Coming in v0.3.0** - This rule will enforce proper cursor management in transaction sync implementations.
+
+When reviewing transaction sync code, enforce proper cursor persistence and loop handling:
+
+## Patterns to Flag
+
+1. **Missing cursor persistence** - calls to `transactionsSync` that don't save `next_cursor` to a database or persistent store after processing. In-memory cursor storage is lost on restart.
+
+2. **Missing has_more loop** - a single call to `transactionsSync` without checking `has_more` and looping. A single call may not return all available updates.
+
+3. **Lost cursor state** - calling `transactionsSync` with an empty cursor when a valid cursor exists. This triggers a full history replay, wasting API calls and risking duplicates.
+
+4. **Cursor saved before processing** - saving the cursor before successfully processing all added/modified/removed transactions. If processing fails, the cursor advances past unprocessed data.
+
+## What to Do
+
+- Always loop until `has_more` is false
+- Persist the cursor only after successfully processing all changes
+- Store cursors in a database table alongside the item_id
+- Use empty string cursor only for initial sync

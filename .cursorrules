@@ -1,0 +1,54 @@
+# Cursor Rules
+
+## Formatting
+
+- Never use em dashes (-). Use a regular dash (-) or rewrite the sentence instead.
+
+## Skill File Conventions
+
+- Every skill lives in `skills/<skill-name>/SKILL.md`
+- YAML frontmatter is required with `name` (matching the directory name) and `description` (one line, when-to-use guidance)
+- Required sections in order: Trigger, Required Inputs, Workflow, Key References (if applicable), Example Interaction, MCP Usage, Common Pitfalls, See Also
+- Keep `## MCP Usage` present even for non-MCP skills (state that no MCP tool exists yet)
+
+## Rule File Conventions
+
+- Rules use `.mdc` extension in the `rules/` directory
+- YAML frontmatter must include `description` and `alwaysApply` (boolean)
+- If `alwaysApply` is false, include `globs` to scope when the rule activates
+
+## Plaid Conventions
+
+- Plaid environments: `sandbox`, `development`, `production` (set via `PLAID_ENV`)
+- Access tokens follow the format `access-{env}-{uuid}` and are permanent credentials
+- Never hardcode `PLAID_CLIENT_ID`, `PLAID_SECRET`, or access tokens. Use environment variables or `.env` files.
+- Sandbox test user: `user_good` / `pass_good` (MFA code: `1234`)
+- Default sandbox institution: `ins_109508` (First Platypus Bank)
+- Plaid amounts: positive = debit (money out), negative = credit (money in)
+
+## MCP Tool Signatures
+
+When referencing MCP tools in documentation, use the canonical parameter names from the skill files:
+- `plaid_syncTransactions({ access_token, cursor?, count? })` not `{ token, offset }`
+- `plaid_createSandboxItem({ institution_id?, products?, webhook? })` not `{ inst, prods }`
+- `plaid_searchInstitutions({ query, country_codes?, products? })` not `{ name, countries }`
+- `plaid_fireSandboxWebhook({ access_token, webhook_code, webhook_type? })` not `{ token, code }`
+
+## MCP Tool Naming
+
+- All MCP tool names use `plaid_camelCase` prefix (e.g. `plaid_syncTransactions`, `plaid_getBalance`)
+- Each tool lives in its own file under `mcp-server/src/tools/`
+- Each tool file exports `register(server: McpServer): void`
+- Use `.js` extension on all imports (ESM)
+
+## Release Checklist
+
+When preparing a release:
+1. Update version in `.cursor-plugin/plugin.json`
+2. Update version in `mcp-server/package.json`
+3. Update `CHANGELOG.md` with new entry
+4. Update `ROADMAP.md` current version marker
+5. Update `CLAUDE.md` version reference
+6. Verify counts in `plugin.json` description match disk
+7. Run `pytest tests/ -v` to verify all tests pass
+8. Build MCP server: `cd mcp-server && npm run build`

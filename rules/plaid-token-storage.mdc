@@ -1,0 +1,34 @@
+---
+description: Flag insecure storage of Plaid access tokens including localStorage, cookies, client-side code, unencrypted database columns, and log files. Coming in v0.5.0.
+alwaysApply: false
+globs:
+  - "**/*.ts"
+  - "**/*.js"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
+# Plaid Token Storage
+
+> **Coming in v0.5.0** - This rule will provide comprehensive access token storage enforcement.
+
+When reviewing files that handle Plaid access tokens, enforce secure storage practices:
+
+## Patterns to Flag
+
+1. **Access tokens in localStorage or sessionStorage** - any pattern like `localStorage.setItem("access_token", ...)` or `sessionStorage.setItem(...)` containing a Plaid token.
+
+2. **Access tokens in cookies** - setting cookies that contain `access-sandbox-`, `access-development-`, or `access-production-` prefixed values.
+
+3. **Access tokens in client-side code** - Plaid access tokens appearing in React components, client-side JavaScript, or any file that runs in the browser.
+
+4. **Unencrypted database storage** - INSERT or UPDATE statements that store access tokens without encryption. Flag plain-text column storage.
+
+5. **Tokens in log output** - `console.log`, `logger.info`, or similar calls that output access token values.
+
+## What to Do
+
+- Store access tokens server-side only, encrypted at rest
+- Use application-layer encryption (AES-256-GCM) or database column encryption
+- Use item_id as the non-sensitive identifier in logs and client-side code
+- Never expose access tokens to the browser

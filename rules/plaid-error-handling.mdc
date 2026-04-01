@@ -1,0 +1,51 @@
+---
+description: Flag Plaid API calls that lack proper error handling. Detect missing try/catch blocks, unchecked PlaidError types, and absent error recovery logic around Plaid client method calls.
+alwaysApply: false
+globs:
+  - "**/*.ts"
+  - "**/*.js"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
+# Plaid Error Handling
+
+When reviewing TypeScript or JavaScript files that call Plaid APIs, enforce proper error handling:
+
+## Patterns to Flag
+
+1. **Plaid API calls without try/catch** - any call to `plaidClient.*` or `client.*` methods matching Plaid endpoints (e.g. `transactionsSync`, `accountsGet`, `linkTokenCreate`, `itemPublicTokenExchange`) that is not wrapped in a try/catch block.
+
+2. **Missing error type checking** - catch blocks that don't inspect `error.response.data` for the Plaid error structure (`error_type`, `error_code`, `error_message`). Generic `catch (e) { throw e }` is not sufficient.
+
+3. **No ITEM_LOGIN_REQUIRED handling** - if the code calls transaction, account, or balance endpoints, it should handle `ITEM_LOGIN_REQUIRED` specifically (either in the catch block or via a centralized error handler).
+
+4. **Missing rate limit handling** - if the code makes multiple Plaid calls in a loop or batch, flag the absence of retry logic or backoff for `RATE_LIMIT_EXCEEDED`.
+
+5. **Swallowed errors** - empty catch blocks or `catch (e) { /* ignore */ }` around Plaid calls. Plaid errors carry actionable information that should be logged or handled.
+
+## What to Do
+
+When these patterns are detected:
+
+- **Suggest wrapping in try/catch** with proper PlaidError type checking
+- **Show the error structure**: `error.response.data` contains `error_type`, `error_code`, `error_message`, `display_message`
+- **Recommend a centralized error handler** that switches on `error_type` (ITEM_ERROR, RATE_LIMIT_EXCEEDED, API_ERROR, INSTITUTION_ERROR, INVALID_REQUEST, INVALID_INPUT)
+- **For rate limits**: suggest exponential backoff with jitter
+
+## Example Fix
+
+```typescript
+try {
+  const response = await plaidClient.transactionsSync({ access_token, cursor });
+} catch (error: any) {
+  const plaidError = error.response?.data;
+  if (plaidError?.error_type === "ITEM_ERROR") {
+    // Handle broken items (e.g. ITEM_LOGIN_REQUIRED)
+  } else if (plaidError?.error_type === "RATE_LIMIT_EXCEEDED") {
+    // Retry with backoff
+  } else {
+    // Log and re-throw or handle gracefully
+  }
+}
+```
