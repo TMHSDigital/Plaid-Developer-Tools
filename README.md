@@ -300,7 +300,7 @@ Issues and PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for conventio
 
 ## License
 
-Copyright (c) TMHSDigital. Licensed under **CC-BY-NC-ND-4.0** - see [LICENSE](LICENSE).
+Copyright (c) TM Hospitality Strategies. Licensed under **CC-BY-NC-ND-4.0** - see [LICENSE](LICENSE).
 
 ---
 
