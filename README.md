@@ -4,7 +4,7 @@
 
 **Cursor plugin and MCP companion for building on Plaid**
 
-[![Version](https://img.shields.io/badge/version-0.3.0-3B5CFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAyTDIyIDEyTDEyIDIyTDIgMTJaIi8+PC9zdmc+)](https://github.com/TMHSDigital/Plaid-Developer-Tools)
+[![Version](https://img.shields.io/badge/version-0.4.0-3B5CFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAyTDIyIDEyTDEyIDIyTDIgMTJaIi8+PC9zdmc+)](https://github.com/TMHSDigital/Plaid-Developer-Tools)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [![CI](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/ci.yml?branch=main&label=CI&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/ci.yml)
 [![Validate](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/validate.yml?branch=main&label=Validate&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/validate.yml)
@@ -20,7 +20,7 @@
 
 ## Overview
 
-Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages agent skills, editor rules, and a TypeScript **MCP server** (`mcp-server/`) so you can design, debug, and ship Plaid integrations without leaving the IDE. Production coverage today is **v0.3.0** with eight skills, five rules, and fourteen live MCP tools; the rest are staged stubs with version targets on the [roadmap](ROADMAP.md).
+Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages agent skills, editor rules, and a TypeScript **MCP server** (`mcp-server/`) so you can design, debug, and ship Plaid integrations without leaving the IDE. Production coverage today is **v0.4.0** with ten skills, six rules, and twenty live MCP tools; the rest are staged stubs with version targets on the [roadmap](ROADMAP.md).
 
 <table>
 <tr>
@@ -32,7 +32,7 @@ Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages ag
 | --- | --- |
 | **Skills** | Guided workflows: Link, `/transactions/sync`, webhooks, sandbox, categories, errors, and future topics |
 | **Rules** | Guardrails: `plaid-secrets`, `plaid-error-handling`, `plaid-env-safety`, and upcoming checks |
-| **MCP** | Thirty tools (14 live, 16 stubs) for institutions, items, balances, sync, investments, identity, webhooks, and more |
+| **MCP** | Thirty tools (20 live, 10 stubs) for institutions, items, balances, sync, investments, identity, webhooks, and more |
 
 </td>
 <td width="50%">
@@ -148,8 +148,8 @@ All seventeen skill directories are listed below. Names match the folder under `
 | `plaid-error-handling` | v0.1.0 | Error codes, detection, recovery |
 | `plaid-api-reference` | v0.2.0 | Endpoint lookup and quick reference |
 | `plaid-institution-search` | v0.2.0 | Institution search and coverage |
-| `plaid-account-verification` | coming v0.4.0 | Auth product, micro-deposits |
-| `plaid-investment-tracking` | coming v0.4.0 | Holdings and securities |
+| `plaid-account-verification` | v0.4.0 | Auth product, micro-deposits, database match |
+| `plaid-investment-tracking` | v0.4.0 | Holdings, securities, portfolio aggregation |
 | `plaid-identity-verification` | coming v0.5.0 | KYC flows, document verification |
 | `plaid-recurring-detection` | coming v0.5.0 | Recurring transaction detection |
 | `plaid-react-integration` | coming v0.6.0 | React hooks and patterns |
@@ -171,14 +171,14 @@ Natural-language aliases you can use in prompts include **link setup**, **transa
 | `plaid-env-safety` | v0.1.0 | `.env*`, config | Sandbox credentials in production-like settings |
 | `plaid-webhook-security` | v0.2.0 | Webhook handlers | Missing webhook signature verification |
 | `plaid-sync-cursor` | v0.3.0 | Sync code | Missing cursor persistence for `/transactions/sync` |
-| `plaid-link-best-practices` | coming v0.4.0 | Link UI | Link integration issues and anti-patterns |
+| `plaid-link-best-practices` | v0.4.0 | Link UI | Link integration issues and anti-patterns |
 | `plaid-token-storage` | coming v0.5.0 | Token storage | Insecure access token handling |
 
 ---
 
 ## MCP tools
 
-The **`mcp-server/`** package exposes **30** tools (14 live in v0.3.0, 16 stubs; build with `npm run build`). Grouping matches how you would tier access in a real deployment.
+The **`mcp-server/`** package exposes **30** tools (20 live in v0.4.0, 10 stubs; build with `npm run build`). Grouping matches how you would tier access in a real deployment.
 
 ### Read-only (no auth)
 
@@ -260,8 +260,8 @@ Summary aligned with [ROADMAP.md](ROADMAP.md):
 | --- | --- |
 | **v0.1.0** | Core skills, secret / env / error rules, CI, docs, MCP scaffold |
 | **v0.2.0** | Read-only MCP tools, `plaid-api-reference`, `plaid-institution-search`, `plaid-webhook-security` |
-| **v0.3.0** (current) | Sandbox MCP tools, `plaid-sync-cursor`, `plaid-sandbox-testing` enhancements |
-| **v0.4.0** | Account verification, investments, `plaid-link-best-practices` |
+| **v0.3.0** | Sandbox MCP tools, `plaid-sync-cursor`, `plaid-sandbox-testing` enhancements |
+| **v0.4.0** (current) | Full API tools, `plaid-account-verification`, `plaid-investment-tracking`, `plaid-link-best-practices` |
 | **v0.5.0** | Identity, recurring detection, `plaid-token-storage` |
 | **v0.6.0** | `plaid-react-integration`, `plaid-nextjs-integration` |
 | **v0.7.0** | `plaid-migration-guide`, `plaid-security-best-practices`, `plaid-production-readiness` |

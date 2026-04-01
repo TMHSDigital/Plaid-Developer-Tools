@@ -1,5 +1,5 @@
 ---
-description: Flag common Plaid Link integration issues including missing onExit handler, no error callback, hardcoded products array, and missing OAuth support. Coming in v0.4.0.
+description: Flag common Plaid Link integration issues including missing onExit handler, no error callback, hardcoded products array, and missing OAuth support.
 alwaysApply: false
 globs:
   - "**/*plaid*link*.tsx"
@@ -11,26 +11,145 @@ globs:
 
 # Plaid Link Best Practices
 
-> **Coming in v0.4.0** - This rule will enforce Plaid Link integration best practices.
-
-When reviewing Plaid Link integration code, enforce proper callback handling and configuration:
+When reviewing Plaid Link integration code, flag any of these patterns and suggest the corrected approach.
 
 ## Patterns to Flag
 
-1. **Missing onExit handler** - `usePlaidLink` or `PlaidLink` without an `onExit` callback. Users who close Link without completing need graceful handling.
+### 1. Missing onExit handler
 
-2. **No error handling in onSuccess** - `onSuccess` callbacks that don't handle the async token exchange failing. The public token exchange can fail even after a successful Link session.
+**Flag** when `usePlaidLink` or `<PlaidLink>` is used without an `onExit` callback. Users who close Link without completing need graceful handling — analytics, retry prompts, or cleanup.
 
-3. **Hardcoded products array** - products passed directly as string literals instead of using the `Products` enum or a configuration-driven approach.
+```tsx
+// BAD — no onExit
+const { open, ready } = usePlaidLink({
+  token: linkToken,
+  onSuccess: (publicToken) => { /* ... */ },
+});
 
-4. **Missing OAuth support** - Link token creation without `redirect_uri` when targeting institutions that require OAuth (Chase, Wells Fargo, Capital One, etc.).
+// GOOD — handles exit
+const { open, ready } = usePlaidLink({
+  token: linkToken,
+  onSuccess: (publicToken, metadata) => { /* ... */ },
+  onExit: (error, metadata) => {
+    if (error) {
+      trackEvent("link_exit_error", { error_code: error.error_code });
+    }
+  },
+});
+```
 
-5. **Link token created in component** - `linkTokenCreate` called inside a React component or `useEffect` without proper caching or state management.
+Look for: `usePlaidLink` or `PlaidLink` without `onExit` in the configuration object.
+
+### 2. No error handling in onSuccess
+
+**Flag** when the `onSuccess` callback sends the public token to the server but does not handle a failed exchange. The token exchange can fail even after a successful Link session (network error, expired token, server issue).
+
+```tsx
+// BAD — fire-and-forget
+onSuccess: (publicToken) => {
+  fetch("/api/exchange-token", {
+    method: "POST",
+    body: JSON.stringify({ public_token: publicToken }),
+  });
+},
+
+// GOOD — handle failure
+onSuccess: async (publicToken, metadata) => {
+  try {
+    const res = await fetch("/api/exchange-token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ public_token: publicToken }),
+    });
+    if (!res.ok) throw new Error(`Exchange failed: ${res.status}`);
+  } catch (error) {
+    showErrorToUser("Failed to connect your bank account. Please try again.");
+  }
+},
+```
+
+Look for: `onSuccess` callbacks that call `fetch` or `axios` without `try/catch` or `.catch()`.
+
+### 3. Hardcoded products array
+
+**Flag** when Plaid products are passed as inline string literals instead of using the `Products` enum or a configuration-driven approach. String typos cause silent failures.
+
+```typescript
+// BAD — typo-prone, no IDE autocompletion
+products: ["transaction", "auth"],  // "transaction" should be "transactions"
+
+// GOOD — enum with autocompletion
+import { Products } from "plaid";
+products: [Products.Transactions, Products.Auth],
+```
+
+Look for: `products:` arrays containing string literals like `"transactions"`, `"auth"`, `"identity"` instead of `Products.` enum references.
+
+### 4. Missing OAuth support
+
+**Flag** when `linkTokenCreate` is called without `redirect_uri` for applications that target OAuth institutions (Chase, Wells Fargo, Capital One, etc.). Without it, users at those banks see an error.
+
+```typescript
+// BAD — no redirect_uri
+const response = await plaidClient.linkTokenCreate({
+  user: { client_user_id: userId },
+  client_name: "My App",
+  products: [Products.Transactions],
+  country_codes: [CountryCode.Us],
+  language: "en",
+});
+
+// GOOD — OAuth-ready
+const response = await plaidClient.linkTokenCreate({
+  user: { client_user_id: userId },
+  client_name: "My App",
+  products: [Products.Transactions],
+  country_codes: [CountryCode.Us],
+  language: "en",
+  redirect_uri: process.env.PLAID_REDIRECT_URI,
+});
+```
+
+Look for: `linkTokenCreate` calls without `redirect_uri` in production-facing code. Sandbox-only code is exempt.
+
+### 5. Link token created in component render cycle
+
+**Flag** when `linkTokenCreate` is called inside a React component body, `useEffect` without deps, or on every render. Link tokens should be fetched once and cached until expiration (4 hours).
+
+```tsx
+// BAD — fetches on every render
+function PlaidButton() {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    fetch("/api/create-link-token").then(r => r.json()).then(d => setToken(d.link_token));
+  }); // missing dependency array = runs every render
+
+  return <button onClick={() => open()}>Connect</button>;
+}
+
+// GOOD — fetches once
+function PlaidButton() {
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/create-link-token")
+      .then((r) => r.json())
+      .then((d) => { if (!cancelled) setToken(d.link_token); });
+    return () => { cancelled = true; };
+  }, []); // empty deps = runs once
+
+  if (!token) return <span>Loading...</span>;
+  return <PlaidLinkButton token={token} />;
+}
+```
+
+Look for: `useEffect` without `[]` dependency array that fetches a Link token, or Link token creation outside of a proper caching mechanism.
 
 ## What to Do
 
 - Always implement both `onSuccess` and `onExit` callbacks
-- Handle token exchange failures in `onSuccess`
-- Use configuration-driven products selection
-- Add `redirect_uri` for OAuth institution support
-- Pre-fetch Link tokens and cache until expiration
+- Handle token exchange failures with try/catch and user-facing error messages
+- Use the `Products` enum from the `plaid` package instead of string literals
+- Add `redirect_uri` for production deployments to support OAuth institutions
+- Fetch Link tokens once per session and cache them; don't re-fetch on every render
+- Register your redirect URI in the Plaid Dashboard under "Allowed redirect URIs"

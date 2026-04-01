@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2026-04-01
+
+### Added
+
+- 6 live MCP tools: `plaid_getBalance`, `plaid_syncTransactions`, `plaid_getRecurring`, `plaid_getInvestmentHoldings`, `plaid_getIdentity`, `plaid_getAuthNumbers`
+- Production skill: `plaid-account-verification` — Instant Auth, micro-deposits, same-day micro-deposits, database match, ACH payment patterns
+- Production skill: `plaid-investment-tracking` — holdings, securities, investment transactions, portfolio aggregation, cost basis
+- Production rule: `plaid-link-best-practices` — flags missing onExit, unhandled token exchange errors, hardcoded products, missing OAuth, render-cycle token creation
+
+### Changed
+
+- `plaid_getRecurring` auto-fetches account IDs if not provided
+- `plaid_syncTransactions` returns one page (caller controls pagination via `has_more` / `next_cursor`)
+
 ## [0.3.0] - 2026-04-01
 
 ### Added
