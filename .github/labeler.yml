@@ -1,0 +1,27 @@
+skills:
+  - changed-files:
+      - any-glob-to-any-file: 'skills/**'
+
+rules:
+  - changed-files:
+      - any-glob-to-any-file: 'rules/**'
+
+mcp-server:
+  - changed-files:
+      - any-glob-to-any-file: 'mcp-server/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.md'
+          - 'CHANGELOG.md'
+          - 'ROADMAP.md'
+          - 'CONTRIBUTING.md'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file: 'tests/**'

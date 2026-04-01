@@ -97,6 +97,28 @@ jobs:
           fi
           echo "All rule frontmatter valid."
 
+      - name: Check version consistency
+        run: |
+          plugin_ver=$(python3 -c "import json; print(json.load(open('.cursor-plugin/plugin.json'))['version'])")
+          pkg_ver=$(python3 -c "import json; print(json.load(open('mcp-server/package.json'))['version'])")
+          index_ver=$(grep -oP 'version:\s*"\K[^"]+' mcp-server/src/index.ts)
+          echo "plugin.json:  $plugin_ver"
+          echo "package.json: $pkg_ver"
+          echo "index.ts:     $index_ver"
+          errors=0
+          if [ "$plugin_ver" != "$pkg_ver" ]; then
+            echo "ERROR: plugin.json ($plugin_ver) != package.json ($pkg_ver)"
+            errors=$((errors + 1))
+          fi
+          if [ "$plugin_ver" != "$index_ver" ]; then
+            echo "ERROR: plugin.json ($plugin_ver) != index.ts ($index_ver)"
+            errors=$((errors + 1))
+          fi
+          if [ $errors -gt 0 ]; then
+            exit 1
+          fi
+          echo "All versions match: $plugin_ver"
+
       - name: Count components
         run: |
           skill_count=$(ls -d skills/*/SKILL.md 2>/dev/null | wc -l)
