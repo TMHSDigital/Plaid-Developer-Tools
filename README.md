@@ -145,23 +145,23 @@ Ask the agent to follow **`plaid-webhook-handling`** when implementing webhook r
 
 | Skill | Status | Summary |
 | --- | --- | --- |
-| `plaid-link-setup` | v0.1.0 | Plaid Link integration with `react-plaid-link` |
-| `plaid-transaction-sync` | v0.1.0 | `/transactions/sync` cursor-based pagination |
-| `plaid-webhook-handling` | v0.1.0 | Webhook types, verification, sandbox firing |
-| `plaid-sandbox-testing` | v0.1.0 (enhanced v0.3.0) | Sandbox credentials, test institutions, error simulation, MCP automation |
-| `plaid-category-mapping` | v0.1.0 | Personal finance category taxonomy |
-| `plaid-error-handling` | v0.1.0 | Error codes, detection, recovery |
-| `plaid-api-reference` | v0.2.0 | Endpoint lookup and quick reference |
-| `plaid-institution-search` | v0.2.0 | Institution search and coverage |
-| `plaid-account-verification` | v0.4.0 | Auth product, micro-deposits, database match |
-| `plaid-investment-tracking` | v0.4.0 | Holdings, securities, portfolio aggregation |
-| `plaid-identity-verification` | v0.5.0 | KYC flows, identity data, match scoring |
-| `plaid-recurring-detection` | v0.5.0 | Recurring transaction detection |
-| `plaid-react-integration` | coming v0.6.0 | React hooks and patterns |
-| `plaid-nextjs-integration` | coming v0.6.0 | Next.js App Router patterns |
-| `plaid-migration-guide` | coming v0.7.0 | Migrate from other aggregators |
-| `plaid-security-best-practices` | coming v0.7.0 | Token encryption, RLS, audit logging |
-| `plaid-production-readiness` | coming v0.7.0 | Production access checklist |
+| `plaid-link-setup` | :white_check_mark: Live | Plaid Link integration with `react-plaid-link` |
+| `plaid-transaction-sync` | :white_check_mark: Live | `/transactions/sync` cursor-based pagination |
+| `plaid-webhook-handling` | :white_check_mark: Live | Webhook types, verification, sandbox firing |
+| `plaid-sandbox-testing` | :white_check_mark: Live | Sandbox credentials, test institutions, error simulation, MCP automation |
+| `plaid-category-mapping` | :white_check_mark: Live | Personal finance category taxonomy |
+| `plaid-error-handling` | :white_check_mark: Live | Error codes, detection, recovery |
+| `plaid-api-reference` | :white_check_mark: Live | Endpoint lookup and quick reference |
+| `plaid-institution-search` | :white_check_mark: Live | Institution search and coverage |
+| `plaid-account-verification` | :white_check_mark: Live | Auth product, micro-deposits, database match |
+| `plaid-investment-tracking` | :white_check_mark: Live | Holdings, securities, portfolio aggregation |
+| `plaid-identity-verification` | :white_check_mark: Live | KYC flows, identity data, match scoring |
+| `plaid-recurring-detection` | :white_check_mark: Live | Recurring transaction detection |
+| `plaid-react-integration` | :construction: v0.6.0 | React hooks and patterns |
+| `plaid-nextjs-integration` | :construction: v0.6.0 | Next.js App Router patterns |
+| `plaid-migration-guide` | :construction: v0.7.0 | Migrate from other aggregators |
+| `plaid-security-best-practices` | :construction: v0.7.0 | Token encryption, RLS, audit logging |
+| `plaid-production-readiness` | :construction: v0.7.0 | Production access checklist |
 
 You can reference skills by natural-language aliases: **link setup**, **transaction sync**, **webhook handling**, **sandbox testing**, **category mapping**, **error handling**, **API reference**, **institution search**, **account verification**, **investment tracking**, **identity verification**, **recurring detection**, **React integration**, **Next.js integration**, **migration guide**, **security best practices**, **production readiness**.
 
@@ -178,13 +178,13 @@ All 7 rules are production-ready.
 
 | Rule | Status | Scope | What it flags |
 | --- | --- | --- | --- |
-| `plaid-secrets` | v0.1.0 | Always on | Hardcoded tokens, API keys, client secrets |
-| `plaid-error-handling` | v0.1.0 | `*.ts`, `*.js` | Unchecked Plaid API calls |
-| `plaid-env-safety` | v0.1.0 | `.env*`, config | Sandbox credentials in production-like settings |
-| `plaid-webhook-security` | v0.2.0 | Webhook handlers | Missing webhook signature verification |
-| `plaid-sync-cursor` | v0.3.0 | Sync code | Missing cursor persistence for `/transactions/sync` |
-| `plaid-link-best-practices` | v0.4.0 | Link UI | Link integration issues and anti-patterns |
-| `plaid-token-storage` | v0.5.0 | Token storage | Insecure access token handling |
+| `plaid-secrets` | :white_check_mark: Live | Always on | Hardcoded tokens, API keys, client secrets |
+| `plaid-error-handling` | :white_check_mark: Live | `*.ts`, `*.js` | Unchecked Plaid API calls |
+| `plaid-env-safety` | :white_check_mark: Live | `.env*`, config | Sandbox credentials in production-like settings |
+| `plaid-webhook-security` | :white_check_mark: Live | Webhook handlers | Missing webhook signature verification |
+| `plaid-sync-cursor` | :white_check_mark: Live | Sync code | Missing cursor persistence for `/transactions/sync` |
+| `plaid-link-best-practices` | :white_check_mark: Live | Link UI | Link integration issues and anti-patterns |
+| `plaid-token-storage` | :white_check_mark: Live | Token storage | Insecure access token handling |
 
 </details>
 
@@ -197,54 +197,54 @@ All 7 rules are production-ready.
 <details>
 <summary><strong>Read-only (no auth) - 8 tools</strong></summary>
 
-| Tool | Purpose |
-| --- | --- |
-| `listCategories` | Personal finance categories |
-| `searchInstitutions` | Institution search |
-| `getInstitution` | Institution metadata |
-| `listProducts` | Available Plaid products |
-| `getApiEndpoint` | Endpoint helper |
-| `listWebhookTypes` | Webhook event types |
-| `listSandboxCredentials` | Sandbox test credentials |
-| `listCountryCoverage` | Country coverage |
+| Tool | Status | Purpose |
+| --- | --- | --- |
+| `listCategories` | :white_check_mark: | Personal finance categories |
+| `searchInstitutions` | :white_check_mark: | Institution search |
+| `getInstitution` | :white_check_mark: | Institution metadata |
+| `listProducts` | :white_check_mark: | Available Plaid products |
+| `getApiEndpoint` | :white_check_mark: | Endpoint helper |
+| `listWebhookTypes` | :white_check_mark: | Webhook event types |
+| `listSandboxCredentials` | :white_check_mark: | Sandbox test credentials |
+| `listCountryCoverage` | :white_check_mark: | Country coverage |
 
 </details>
 
 <details>
 <summary><strong>Sandbox auth - 12 tools</strong></summary>
 
-| Tool | Purpose |
-| --- | --- |
-| `createLinkToken` | Create a Link token |
-| `exchangePublicToken` | Exchange public token |
-| `createSandboxItem` | Create sandbox Item |
-| `resetSandboxLogin` | Reset sandbox login |
-| `fireSandboxWebhook` | Fire sandbox webhook |
-| `getAccounts` | List accounts |
-| `getBalance` | Balances |
-| `syncTransactions` | Transaction sync |
-| `getRecurring` | Recurring streams |
-| `getInvestmentHoldings` | Investment holdings |
-| `getIdentity` | Identity data |
-| `getAuthNumbers` | Auth micro-deposit numbers |
+| Tool | Status | Purpose |
+| --- | --- | --- |
+| `createLinkToken` | :white_check_mark: | Create a Link token |
+| `exchangePublicToken` | :white_check_mark: | Exchange public token |
+| `createSandboxItem` | :white_check_mark: | Create sandbox Item |
+| `resetSandboxLogin` | :white_check_mark: | Reset sandbox login |
+| `fireSandboxWebhook` | :white_check_mark: | Fire sandbox webhook |
+| `getAccounts` | :white_check_mark: | List accounts |
+| `getBalance` | :white_check_mark: | Balances |
+| `syncTransactions` | :white_check_mark: | Transaction sync |
+| `getRecurring` | :white_check_mark: | Recurring streams |
+| `getInvestmentHoldings` | :white_check_mark: | Investment holdings |
+| `getIdentity` | :white_check_mark: | Identity data |
+| `getAuthNumbers` | :white_check_mark: | Auth micro-deposit numbers |
 
 </details>
 
 <details>
 <summary><strong>Write / advanced - 10 tools</strong></summary>
 
-| Tool | Purpose |
-| --- | --- |
-| `sandboxSetVerificationStatus` | Sandbox verification status |
-| `simulateTransactions` | Simulate transactions |
-| `refreshTransactions` | Refresh transactions |
-| `removeItem` | Remove Item |
-| `getItemStatus` | Item status |
-| `updateItemWebhook` | Update Item webhook URL |
-| `getLiabilities` | Liabilities |
-| `getTransferIntent` | Transfer intent |
-| `verifyWebhookSignature` | Verify webhook signature |
-| `inspectAccessToken` | Inspect token metadata (debug) |
+| Tool | Status | Purpose |
+| --- | --- | --- |
+| `sandboxSetVerificationStatus` | :white_check_mark: | Sandbox verification status |
+| `simulateTransactions` | :white_check_mark: | Simulate transactions |
+| `refreshTransactions` | :white_check_mark: | Refresh transactions |
+| `removeItem` | :white_check_mark: | Remove Item |
+| `getItemStatus` | :white_check_mark: | Item status |
+| `updateItemWebhook` | :construction: v0.6.0 | Update Item webhook URL |
+| `getLiabilities` | :construction: v0.6.0 | Liabilities |
+| `getTransferIntent` | :construction: v0.6.0 | Transfer intent |
+| `verifyWebhookSignature` | :construction: v0.6.0 | Verify webhook signature |
+| `inspectAccessToken` | :construction: v0.6.0 | Inspect token metadata (debug) |
 
 </details>
 
