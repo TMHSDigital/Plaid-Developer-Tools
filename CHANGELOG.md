@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-04-01
+
+### Added
+
+- 8 live read-only MCP tools: `plaid_listCategories`, `plaid_searchInstitutions`, `plaid_getInstitution`, `plaid_listProducts`, `plaid_getApiEndpoint`, `plaid_listWebhookTypes`, `plaid_listSandboxCredentials`, `plaid_listCountryCoverage`
+- Production skill: `plaid-api-reference` - full Plaid API endpoint reference with parameters, auth tiers, rate limits, and code examples
+- Production skill: `plaid-institution-search` - institution search by name, routing number, product filtering, OAuth handling
+- Production rule: `plaid-webhook-security` - flags missing webhook verification, unvalidated payloads, missing body hash comparison
+
+### Changed
+
+- `searchInstitutions` and `getInstitution` MCP tools now call the Plaid SDK live (require sandbox credentials)
+- 6 reference MCP tools return embedded data (no credentials needed): categories, products, endpoints, webhook types, sandbox credentials, country coverage
+
 ## [0.1.0] - 2026-04-01
 
 ### Added

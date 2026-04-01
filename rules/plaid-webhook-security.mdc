@@ -1,5 +1,5 @@
 ---
-description: Flag missing webhook signature verification, unvalidated webhook payloads, and insecure webhook endpoint patterns in Plaid integrations. Coming in v0.2.0.
+description: Flag missing webhook signature verification, unvalidated webhook payloads, and insecure webhook endpoint patterns in Plaid integrations.
 alwaysApply: false
 globs:
   - "**/webhook*.ts"
@@ -11,24 +11,96 @@ globs:
 
 # Plaid Webhook Security
 
-> **Coming in v0.2.0** - This rule will provide comprehensive webhook security enforcement.
-
-When reviewing webhook handler files for Plaid integrations, enforce signature verification and secure processing:
+When reviewing webhook handler files for Plaid integrations, enforce signature verification and secure processing patterns. Plaid signs every webhook with a JWK-based JWT in the `plaid-verification` header. Handlers that skip verification are vulnerable to spoofed events.
 
 ## Patterns to Flag
 
-1. **Missing webhook verification** - webhook handlers that process `webhook_type` and `webhook_code` without first verifying the `plaid-verification` header using Plaid's JWK-based signature verification.
+1. **Missing webhook verification** - webhook handlers that read `webhook_type`, `webhook_code`, or `item_id` from the request body without first verifying the `plaid-verification` header.
 
-2. **No signature validation** - POST route handlers that accept Plaid webhook payloads without calling `webhookVerificationKeyGet` and validating the JWT signature.
+   Bad:
+   ```typescript
+   app.post("/webhook", async (req, res) => {
+     const { webhook_type, webhook_code, item_id } = req.body;
+     await processEvent(webhook_type, webhook_code, item_id);
+     res.sendStatus(200);
+   });
+   ```
 
-3. **Trusting unverified payloads** - using `req.body.item_id`, `req.body.webhook_code`, or other payload fields to trigger database operations or API calls without first verifying the webhook signature.
+   Good:
+   ```typescript
+   app.post("/webhook", async (req, res) => {
+     const rawBody = req.rawBody;
+     const verificationHeader = req.headers["plaid-verification"] as string;
+     await verifyPlaidWebhook(rawBody, verificationHeader);
+     const { webhook_type, webhook_code, item_id } = req.body;
+     await processEvent(webhook_type, webhook_code, item_id);
+     res.sendStatus(200);
+   });
+   ```
 
-4. **Missing body hash comparison** - verifying the JWT but not comparing the `request_body_sha256` claim against the actual request body hash.
+2. **No body hash comparison** - verifying the JWT signature but not comparing the `request_body_sha256` claim against the SHA-256 hash of the raw request body. This allows payload tampering after signing.
+
+   Bad:
+   ```typescript
+   const decoded = jwt.verify(token, pem, { algorithms: ["ES256"] });
+   // Missing: compare decoded.request_body_sha256 against sha256(rawBody)
+   ```
+
+   Good:
+   ```typescript
+   const decoded = jwt.verify(token, pem, { algorithms: ["ES256"] });
+   const bodyHash = crypto.createHash("sha256").update(rawBody).digest("hex");
+   if (decoded.request_body_sha256 !== bodyHash) {
+     throw new Error("Webhook body hash mismatch");
+   }
+   ```
+
+3. **Trusting unverified payload fields** - using `req.body.item_id` or `req.body.webhook_code` to trigger database writes, API calls, or state transitions without prior verification. An attacker could POST fake events to trigger unauthorized actions.
+
+4. **Missing raw body preservation** - using `express.json()` without also capturing the raw body. Verification requires the exact bytes Plaid signed, not a re-serialized JSON object.
+
+   Bad:
+   ```typescript
+   app.use(express.json());
+   ```
+
+   Good:
+   ```typescript
+   app.use(express.json({
+     verify: (req, _res, buf) => { (req as any).rawBody = buf.toString("utf-8"); },
+   }));
+   ```
+
+5. **Accepting expired JWTs** - not setting `maxAge` when verifying the webhook JWT. Plaid recommends rejecting tokens older than 5 minutes.
+
+   Bad:
+   ```typescript
+   jwt.verify(token, pem, { algorithms: ["ES256"] });
+   ```
+
+   Good:
+   ```typescript
+   jwt.verify(token, pem, { algorithms: ["ES256"], maxAge: "5m" });
+   ```
+
+6. **Synchronous processing with late response** - doing heavy work before sending 200. Plaid retries on timeout. The handler should respond 200 immediately and process the event asynchronously.
 
 ## What to Do
 
-- Implement full webhook verification before processing any payload data
-- Use the `plaid-verification` header to extract the signed JWT
-- Fetch the verification key using `webhookVerificationKeyGet`
-- Verify both the JWT signature and the body hash
-- Return 200 immediately, process asynchronously
+When any of these patterns are detected:
+
+- **Warn immediately**: "This webhook handler does not verify the `plaid-verification` header. Plaid webhooks must be verified before processing."
+- **Recommend the full verification flow**:
+  1. Extract the JWT from the `plaid-verification` header
+  2. Decode the JWT header to get the `kid`
+  3. Fetch the public key using `plaidClient.webhookVerificationKeyGet({ key_id: kid })`
+  4. Convert the JWK to PEM format
+  5. Verify the JWT with algorithm `ES256` and `maxAge: "5m"`
+  6. Hash the raw request body with SHA-256 and compare to `request_body_sha256` claim
+  7. Only then process the webhook payload
+- **Suggest the MCP tool**: `plaid_verifyWebhookSignature` can validate a webhook payload offline for testing and debugging.
+
+## Key Reference
+
+- [Webhook verification guide](https://plaid.com/docs/api/webhooks/webhook-verification/)
+- [plaid-webhook-handling skill](../skills/plaid-webhook-handling/SKILL.md) for full implementation examples

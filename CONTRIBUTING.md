@@ -28,7 +28,7 @@ Symlink the repo into the local plugins directory: `~/.cursor/plugins/local/plai
 
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.cursor\plugins\local\plaid-developer-tools" | Out-Null
-cmd /c mklink /J "$env:USERPROFILE\.cursor\plugins\local\plaid-developer-tools\Plaid-Developer-Tools" "E:\Plaid-Developer-Tools"
+cmd /c mklink /J "$env:USERPROFILE\.cursor\plugins\local\plaid-developer-tools\Plaid-Developer-Tools" (Get-Location)
 ```
 
 Adjust the final path if your clone lives elsewhere.

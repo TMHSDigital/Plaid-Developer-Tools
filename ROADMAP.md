@@ -1,11 +1,11 @@
 # Roadmap
 
-**Current:** v0.1.0
+**Current:** v0.2.0
 
 | Version | Theme | Skills | Rules | MCP Tools | Highlights | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| v0.1.0 (current) | Foundation | 6 | 3 | 0 | Core skills, secret/env/error rules, plugin scaffold, CI, docs | **Current** |
-| v0.2.0 | Live Data | +2 | +1 | 8 | MCP server read-only tools, API reference skill, institution search skill, webhook security rule | Planned |
+| v0.1.0 | Foundation | 6 | 3 | 0 | Core skills, secret/env/error rules, plugin scaffold, CI, docs | Done |
+| v0.2.0 (current) | Live Data | +2 | +1 | 8 | MCP server read-only tools, API reference skill, institution search skill, webhook security rule | **Current** |
 | v0.3.0 | Sandbox Power | +1 | +1 | +6 | 6 sandbox MCP tools, sandbox testing enhancements, sync cursor rule | Planned |
 | v0.4.0 | Full API | +2 | +1 | +6 | Account verification, investment tracking, link best practices rule | Planned |
 | v0.5.0 | Advanced | +2 | +1 | +5 | Identity verification, recurring detection, token storage rule | Planned |
@@ -24,3 +24,7 @@
 - [x] `plaid-secrets` added in v0.1.0
 - [x] `plaid-error-handling` rule added in v0.1.0
 - [x] `plaid-env-safety` added in v0.1.0
+- [x] `plaid-api-reference` added in v0.2.0
+- [x] `plaid-institution-search` added in v0.2.0
+- [x] `plaid-webhook-security` rule added in v0.2.0
+- [x] 8 read-only MCP tools implemented in v0.2.0

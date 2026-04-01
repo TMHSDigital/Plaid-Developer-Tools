@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-The **Plaid Developer Tools** Cursor plugin is at **v0.1.0**. It accelerates Plaid integration work with **17 skills**, **7 rules**, and a companion MCP server exposing **30 tools** for Link, transactions, webhooks, sandbox flows, and API discovery. Skills encode workflows; rules enforce secrets handling, errors, and webhook safety; the MCP server defines 30 tool stubs (all returning "not yet implemented" in v0.1.0) that will provide live Plaid sandbox interaction in future releases.
+The **Plaid Developer Tools** Cursor plugin is at **v0.2.0**. It accelerates Plaid integration work with **17 skills**, **7 rules**, and a companion MCP server exposing **30 tools** for Link, transactions, webhooks, sandbox flows, and API discovery. Skills encode workflows; rules enforce secrets handling, errors, and webhook safety; the MCP server has 8 live read-only tools (categories, institutions, products, endpoints, webhooks, sandbox credentials, country coverage) and 22 stubs that will provide live Plaid sandbox interaction in future releases.
 
 ## Plugin Architecture
 
@@ -25,8 +25,8 @@ mcp-server/                  - MCP server with 30 tools
 | plaid-sandbox-testing | Sandbox credentials, test institutions, error simulation |
 | plaid-category-mapping | Personal finance category taxonomy and mapping |
 | plaid-error-handling | Error codes, detection, and recovery strategies |
-| plaid-api-reference | API endpoint lookup (coming v0.2.0) |
-| plaid-institution-search | Institution search and coverage (coming v0.2.0) |
+| plaid-api-reference | API endpoint lookup |
+| plaid-institution-search | Institution search and coverage |
 | plaid-account-verification | Auth product, micro-deposits (coming v0.4.0) |
 | plaid-investment-tracking | Holdings, securities, transactions (coming v0.4.0) |
 | plaid-identity-verification | KYC flows, document verification (coming v0.5.0) |
@@ -44,7 +44,7 @@ mcp-server/                  - MCP server with 30 tools
 | plaid-secrets.mdc | Global | Flags Plaid API keys, access tokens, client credentials |
 | plaid-error-handling.mdc | *.ts, *.js, *.tsx, *.jsx | Flags unchecked Plaid API calls |
 | plaid-env-safety.mdc | .env*, config files | Flags sandbox credentials in production |
-| plaid-webhook-security.mdc | webhook files | Flags missing webhook verification (coming v0.2.0) |
+| plaid-webhook-security.mdc | webhook files | Flags missing webhook verification |
 | plaid-token-storage.mdc | *.ts, *.js | Flags insecure access token storage (coming v0.5.0) |
 | plaid-sync-cursor.mdc | *sync*, *transaction* | Flags missing cursor persistence (coming v0.3.0) |
 | plaid-link-best-practices.mdc | *plaid*link* | Flags Link integration issues (coming v0.4.0) |
