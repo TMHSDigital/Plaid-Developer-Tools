@@ -13,7 +13,7 @@ export function register(server: McpServer): void {
     "Get liability accounts including credit cards, student loans, and mortgages",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_getLiabilities", "v0.5.0");
+      return stubResponse("plaid_getLiabilities", "v0.6.0");
     },
   );
 }

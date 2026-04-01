@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2026-04-01
+
+### Added
+
+- 5 live MCP tools: `plaid_sandboxSetVerificationStatus`, `plaid_simulateTransactions`, `plaid_refreshTransactions`, `plaid_removeItem`, `plaid_getItemStatus`
+- Production skill: `plaid-identity-verification` — identity data retrieval, match scoring, Identity Verification (KYC), joint account handling
+- Production skill: `plaid-recurring-detection` — inflow/outflow streams, frequency types, stream lifecycle, subscription tracking, income detection
+- Production rule: `plaid-token-storage` — flags localStorage, cookies, client-side code, unencrypted DB, and log output containing access tokens
+
+### Changed
+
+- Re-tagged 3 MCP tool stubs (`updateItemWebhook`, `getLiabilities`, `getTransferIntent`) from v0.5.0 to v0.6.0
+- `plaid_simulateTransactions` fires a `TRANSACTIONS` / `DEFAULT_UPDATE` webhook to generate sandbox test data
+- `plaid_getItemStatus` returns full item metadata including products, webhook, and consent expiration
+
 ## [0.4.0] - 2026-04-01
 
 ### Added

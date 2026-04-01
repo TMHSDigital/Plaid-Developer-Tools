@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { stubResponse } from "../types.js";
+import { textResponse, errorResponse } from "../types.js";
+import { getPlaidClient } from "./utils.js";
 
 const inputSchema = {
   access_token: z.string().describe("Plaid access token for the item"),
@@ -12,7 +13,25 @@ export function register(server: McpServer): void {
     "Force a transaction refresh for an item",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_refreshTransactions", "v0.5.0");
+      try {
+        const client = getPlaidClient();
+        const response = await client.transactionsRefresh({
+          access_token: args.access_token,
+        });
+
+        return textResponse(
+          JSON.stringify(
+            {
+              refreshed: true,
+              request_id: response.data.request_id,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (error) {
+        return errorResponse(error);
+      }
     },
   );
 }

@@ -15,7 +15,7 @@ export function register(server: McpServer): void {
     "Create a transfer intent for payment initiation",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_getTransferIntent", "v0.5.0");
+      return stubResponse("plaid_getTransferIntent", "v0.6.0");
     },
   );
 }

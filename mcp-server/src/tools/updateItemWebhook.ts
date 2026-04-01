@@ -13,7 +13,7 @@ export function register(server: McpServer): void {
     "Update the webhook URL for an item",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_updateItemWebhook", "v0.5.0");
+      return stubResponse("plaid_updateItemWebhook", "v0.6.0");
     },
   );
 }

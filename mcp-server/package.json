@@ -1,6 +1,6 @@
 {
   "name": "@tmhs/plaid-mcp",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "MCP server for Plaid API integration - 30 tools for sandbox testing, transactions, accounts, institutions, categories, investments, identity, webhooks, and more.",
   "type": "module",
   "main": "dist/index.js",

@@ -1,5 +1,5 @@
 ---
-description: Flag insecure storage of Plaid access tokens including localStorage, cookies, client-side code, unencrypted database columns, and log files. Coming in v0.5.0.
+description: Flag insecure storage of Plaid access tokens including localStorage, cookies, client-side code, unencrypted database columns, and log files.
 alwaysApply: false
 globs:
   - "**/*.ts"
@@ -10,25 +10,123 @@ globs:
 
 # Plaid Token Storage
 
-> **Coming in v0.5.0** - This rule will provide comprehensive access token storage enforcement.
-
-When reviewing files that handle Plaid access tokens, enforce secure storage practices:
+When reviewing files that handle Plaid access tokens, flag any of these patterns and suggest the corrected approach.
 
 ## Patterns to Flag
 
-1. **Access tokens in localStorage or sessionStorage** - any pattern like `localStorage.setItem("access_token", ...)` or `sessionStorage.setItem(...)` containing a Plaid token.
+### 1. Access tokens in localStorage or sessionStorage
 
-2. **Access tokens in cookies** - setting cookies that contain `access-sandbox-`, `access-development-`, or `access-production-` prefixed values.
+**Flag** when Plaid access tokens (prefixed `access-sandbox-`, `access-development-`, or `access-production-`) are stored in browser storage. This exposes tokens to XSS attacks and browser extensions.
 
-3. **Access tokens in client-side code** - Plaid access tokens appearing in React components, client-side JavaScript, or any file that runs in the browser.
+```typescript
+// BAD — client-side storage
+localStorage.setItem("plaid_access_token", accessToken);
+const token = sessionStorage.getItem("access_token");
 
-4. **Unencrypted database storage** - INSERT or UPDATE statements that store access tokens without encryption. Flag plain-text column storage.
+// GOOD — server-side only, return an opaque reference to the client
+const itemId = await db.items.insert({
+  access_token: encrypt(accessToken),
+  user_id: userId,
+});
+res.json({ item_id: itemId }); // client only sees the item_id
+```
 
-5. **Tokens in log output** - `console.log`, `logger.info`, or similar calls that output access token values.
+Look for: `localStorage.setItem`, `sessionStorage.setItem`, `localStorage.getItem`, or `sessionStorage.getItem` with variable names containing `access_token`, `plaid_token`, or `accessToken`.
+
+### 2. Access tokens in cookies
+
+**Flag** when access tokens are set as cookies, whether via `Set-Cookie` headers, `document.cookie`, or cookie libraries. Cookies are sent with every request and are vulnerable to CSRF.
+
+```typescript
+// BAD — token in cookie
+res.cookie("plaid_token", accessToken);
+document.cookie = `access_token=${accessToken}`;
+
+// GOOD — store server-side, use session ID in cookie instead
+req.session.plaidItemId = itemId; // session cookie references DB record
+```
+
+Look for: `res.cookie`, `document.cookie`, `setCookie`, or `cookies.set` with values containing access token patterns or variable names.
+
+### 3. Access tokens in client-side code
+
+**Flag** when access tokens appear in React components, client-side bundles, or any file that runs in the browser. Access tokens grant persistent read access to financial data and must never leave the server.
+
+```tsx
+// BAD — token in component state
+const [accessToken, setAccessToken] = useState(data.access_token);
+return <AccountView token={accessToken} />;
+
+// GOOD — server fetches data using the token, client only sees results
+const [accounts, setAccounts] = useState<Account[]>([]);
+useEffect(() => {
+  fetch(`/api/accounts/${itemId}`)
+    .then((r) => r.json())
+    .then(setAccounts);
+}, [itemId]);
+```
+
+Look for: `useState`, `useRef`, `props.accessToken`, or JSX attributes containing access token values. Any file in `src/`, `app/`, `pages/`, or `components/` that references `access_token` as a variable is suspect.
+
+### 4. Unencrypted database storage
+
+**Flag** when access tokens are stored in database columns without encryption. A database breach would expose all tokens, giving attackers persistent access to users' financial data.
+
+```typescript
+// BAD — plain-text storage
+await db.query(
+  "INSERT INTO items (user_id, access_token) VALUES ($1, $2)",
+  [userId, accessToken],
+);
+
+// GOOD — encrypt before storage
+import { createCipheriv, randomBytes } from "crypto";
+
+function encryptToken(token: string): { encrypted: string; iv: string } {
+  const iv = randomBytes(16);
+  const cipher = createCipheriv(
+    "aes-256-gcm",
+    Buffer.from(process.env.TOKEN_ENCRYPTION_KEY!, "hex"),
+    iv,
+  );
+  let encrypted = cipher.update(token, "utf8", "hex");
+  encrypted += cipher.final("hex");
+  const authTag = cipher.getAuthTag().toString("hex");
+  return { encrypted: encrypted + ":" + authTag, iv: iv.toString("hex") };
+}
+
+const { encrypted, iv } = encryptToken(accessToken);
+await db.query(
+  "INSERT INTO items (user_id, access_token_enc, token_iv) VALUES ($1, $2, $3)",
+  [userId, encrypted, iv],
+);
+```
+
+Look for: SQL `INSERT` or `UPDATE` statements, ORM `.create()` or `.save()` calls, or key-value store `.set()` calls that pass `access_token` as a plain-text string without an `encrypt` wrapper.
+
+### 5. Tokens in log output
+
+**Flag** when access tokens are logged via `console.log`, `console.debug`, `logger.info`, `logger.debug`, or any logging call. Log files are often stored unencrypted, aggregated to third-party services, and accessed by broad teams.
+
+```typescript
+// BAD — token in logs
+console.log("Access token:", accessToken);
+logger.info({ access_token: token }, "Item created");
+logger.debug(`Plaid response: ${JSON.stringify(response.data)}`);
+
+// GOOD — log non-sensitive identifiers only
+console.log("Item created:", itemId);
+logger.info({ item_id: itemId, institution_id: institutionId }, "Item created");
+logger.debug("Plaid response received", { request_id: response.data.request_id });
+```
+
+Look for: `console.log`, `console.debug`, `console.info`, `logger.info`, `logger.debug`, `logger.warn`, or `logger.error` calls that include variables named `access_token`, `accessToken`, `plaid_token`, or log the full Plaid API response object (which contains the token in exchange responses).
 
 ## What to Do
 
-- Store access tokens server-side only, encrypted at rest
-- Use application-layer encryption (AES-256-GCM) or database column encryption
-- Use item_id as the non-sensitive identifier in logs and client-side code
-- Never expose access tokens to the browser
+- Store access tokens **server-side only**, encrypted at rest with AES-256-GCM or equivalent
+- Use `item_id` as the non-sensitive identifier in client-side code, logs, and API responses
+- Never send access tokens to the browser — the server should proxy all Plaid API calls
+- Rotate the encryption key periodically and re-encrypt stored tokens
+- If a token is compromised, call `/item/remove` to invalidate it immediately
+- Audit log aggregation pipelines to ensure no PII or tokens are captured

@@ -1,14 +1,14 @@
 # Roadmap
 
-**Current:** v0.4.0
+**Current:** v0.5.0
 
 | Version | Theme | Skills | Rules | MCP Tools | Highlights | Status |
 | --- | --- | --- | --- | --- | --- | --- |
 | v0.1.0 | Foundation | 6 | 3 | 0 | Core skills, secret/env/error rules, plugin scaffold, CI, docs | Done |
 | v0.2.0 | Live Data | +2 | +1 | 8 | MCP server read-only tools, API reference skill, institution search skill, webhook security rule | Done |
 | v0.3.0 | Sandbox Power | +0 (enhanced 1) | +1 | +6 | 6 sandbox MCP tools, sandbox testing enhancements, sync cursor rule | Done |
-| v0.4.0 (current) | Full API | +2 | +1 | +6 | Account verification, investment tracking, link best practices rule | **Current** |
-| v0.5.0 | Advanced | +2 | +1 | +5 | Identity verification, recurring detection, token storage rule | Planned |
+| v0.4.0 | Full API | +2 | +1 | +6 | Account verification, investment tracking, link best practices rule | Done |
+| v0.5.0 (current) | Advanced | +2 | +1 | +5 | Identity verification, recurring detection, token storage rule | **Current** |
 | v0.6.0 | Framework Integration | +2 | 0 | +3 | React integration, Next.js integration, webhook tools | Planned |
 | v0.7.0 | Ship It | +2 | 0 | +2 | Migration guide, production readiness, utility tools | Planned |
 | v1.0.0 | Stable | 17 | 7 | 30 | Final polish, all docs, comprehensive test suite, npm publish | Planned |
@@ -35,3 +35,7 @@
 - [x] `plaid-investment-tracking` added in v0.4.0
 - [x] `plaid-link-best-practices` rule added in v0.4.0
 - [x] 6 Full API MCP tools implemented in v0.4.0 (getBalance, syncTransactions, getRecurring, getInvestmentHoldings, getIdentity, getAuthNumbers)
+- [x] `plaid-identity-verification` added in v0.5.0
+- [x] `plaid-recurring-detection` added in v0.5.0
+- [x] `plaid-token-storage` rule added in v0.5.0
+- [x] 5 advanced MCP tools implemented in v0.5.0 (sandboxSetVerificationStatus, simulateTransactions, refreshTransactions, removeItem, getItemStatus)
