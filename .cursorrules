@@ -1,8 +1,15 @@
 # Cursor Rules
 
-## Formatting
+## Writing Style
 
-- Never use em dashes (-). Use a regular dash (-) or rewrite the sentence instead.
+- **No em dashes.** Never use `—` (em dash). Use a hyphen `-`, a comma, a period, or rewrite the sentence.
+- **No filler words.** Cut "basically", "simply", "just", "actually", "in order to", "leverage", "utilize". Say what you mean.
+- **No hedge stacking.** One qualifier max. Not "it might potentially possibly help" but "it may help".
+- **Active voice.** "The server returns X" not "X is returned by the server".
+- **Short sentences.** If a sentence has more than one comma-separated clause, split it.
+- **No marketing tone.** Don't say "powerful", "seamless", "robust", "comprehensive", "elegant". Describe what it does, not how great it is.
+- **Parallel structure in lists.** Every item in a bullet list or table column should use the same grammatical form (all verb phrases, all noun phrases, etc.).
+- **Code over prose.** When explaining how something works, show a code example first. Add prose only if the code isn't self-explanatory.
 
 ## Skill File Conventions
 

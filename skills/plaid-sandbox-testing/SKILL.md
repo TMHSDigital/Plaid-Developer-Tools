@@ -139,7 +139,7 @@ With the MCP server configured, you can run an end-to-end sandbox test without w
 4. **Test error recovery:**
    > Use `plaid_resetSandboxLogin` to force `ITEM_LOGIN_REQUIRED`, then use `plaid_createLinkToken` with `access_token` to generate an update-mode Link token.
 
-This loop lets you validate your entire integration path — item creation, data fetch, webhook handling, and error recovery — from the chat.
+This loop lets you validate your entire integration path - item creation, data fetch, webhook handling, and error recovery - from the chat.
 
 ## Custom Sandbox Users
 
@@ -186,7 +186,7 @@ Sandbox supports OAuth redirect testing for institutions that require it in prod
    ```
 
 3. On the callback page, reinitialize Link with `receivedRedirectUri: window.location.href`.
-4. In sandbox, the OAuth flow completes instantly with `user_good` / `pass_good` — no real bank redirect occurs.
+4. In sandbox, the OAuth flow completes instantly with `user_good` / `pass_good` - no real bank redirect occurs.
 
 ## Key References
 
@@ -207,7 +207,7 @@ Sandbox supports OAuth redirect testing for institutions that require it in prod
 3. Calls `plaid_getAccounts` to verify the item is connected and show account details
 4. Fires `SYNC_UPDATES_AVAILABLE` webhook via `plaid_fireSandboxWebhook` to generate transactions
 5. Demonstrates the full sync loop processing
-6. Notes: "Store this access token — sandbox items persist until manually removed"
+6. Notes: "Store this access token - sandbox items persist until manually removed"
 
 ## MCP Usage
 
@@ -225,15 +225,15 @@ Sandbox supports OAuth redirect testing for institutions that require it in prod
 
 ## Common Pitfalls
 
-1. **Using sandbox credentials in production** — sandbox `client_id`/`secret` only work against `sandbox.plaid.com`. The `plaid-env-safety` rule flags this.
-2. **Expecting real bank data in sandbox** — sandbox returns synthetic data. Account numbers, balances, and transactions are all fake.
-3. **Not testing error flows** — happy path works in sandbox by default. Use `sandboxItemResetLogin` or `plaid_resetSandboxLogin` to test error recovery.
-4. **Forgetting webhook testing** — sandbox webhooks only fire when you explicitly call `sandboxItemFireWebhook`. They don't fire automatically like in production.
-5. **Assuming sandbox behavior matches production** — some timing differences exist. Production transactions appear with a delay; sandbox transactions are instant.
-6. **Calling exchangePublicToken after createSandboxItem** — the MCP tool auto-exchanges the token. The `access_token` is already in the response.
+1. **Using sandbox credentials in production** - sandbox `client_id`/`secret` only work against `sandbox.plaid.com`. The `plaid-env-safety` rule flags this.
+2. **Expecting real bank data in sandbox** - sandbox returns synthetic data. Account numbers, balances, and transactions are all fake.
+3. **Not testing error flows** - happy path works in sandbox by default. Use `sandboxItemResetLogin` or `plaid_resetSandboxLogin` to test error recovery.
+4. **Forgetting webhook testing** - sandbox webhooks only fire when you explicitly call `sandboxItemFireWebhook`. They don't fire automatically like in production.
+5. **Assuming sandbox behavior matches production** - some timing differences exist. Production transactions appear with a delay; sandbox transactions are instant.
+6. **Calling exchangePublicToken after createSandboxItem** - the MCP tool auto-exchanges the token. The `access_token` is already in the response.
 
 ## See Also
 
-- [Plaid Link Setup](../plaid-link-setup/SKILL.md) — use Link with sandbox test credentials
-- [Plaid Error Handling](../plaid-error-handling/SKILL.md) — handle errors simulated in sandbox
-- [Plaid Webhook Handling](../plaid-webhook-handling/SKILL.md) — process webhooks fired from sandbox
+- [Plaid Link Setup](../plaid-link-setup/SKILL.md) - use Link with sandbox test credentials
+- [Plaid Error Handling](../plaid-error-handling/SKILL.md) - handle errors simulated in sandbox
+- [Plaid Webhook Handling](../plaid-webhook-handling/SKILL.md) - process webhooks fired from sandbox

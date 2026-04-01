@@ -67,7 +67,7 @@ Use this skill when the user:
    ```typescript
    const owners = account.owners;
    if (owners.length > 1) {
-     // Joint account — match against any owner
+     // Joint account - match against any owner
      const matched = owners.some((owner) =>
        owner.names.some((name) =>
          fuzzyMatch(name, userProvidedName),
@@ -97,7 +97,7 @@ Use this skill when the user:
 
    for (const account of matchResponse.data.accounts) {
      const scores = account.legal_name;
-     // scores.score — 0-100, higher is better
+     // scores.score - 0-100, higher is better
      // scores.is_nickname_match, scores.is_first_name_or_last_name_match
      console.log(`Name match score: ${scores?.score}`);
      console.log(`Address match: ${account.address?.score}`);
@@ -113,7 +113,7 @@ Use this skill when the user:
    | 50–69 | Weak match | Request additional verification |
    | 0–49 | Mismatch | Flag for manual review |
 
-5. **Identity Verification product (KYC).** For full KYC with document and selfie verification, use the Identity Verification product — a separate Plaid product from Identity:
+5. **Identity Verification product (KYC).** For full KYC with document and selfie verification, use the Identity Verification product - a separate Plaid product from Identity:
 
    ```typescript
    // Create an Identity Verification session via Link
@@ -169,7 +169,7 @@ Identity data coverage varies by institution. Not all banks return all fields:
 3. Retrieves identity data via `plaid_getIdentity`
 4. Shows how to compare names and addresses with match scoring
 5. Recommends Identity Verification product for stricter KYC requirements
-6. Notes: "Identity data availability varies by institution — always handle missing fields gracefully"
+6. Notes: "Identity data availability varies by institution - always handle missing fields gracefully"
 
 ## MCP Usage
 
@@ -183,15 +183,15 @@ Identity data coverage varies by institution. Not all banks return all fields:
 
 ## Common Pitfalls
 
-1. **Assuming a single owner** — joint accounts return multiple `owners` entries. Always iterate through all owners when matching.
-2. **Using exact string matching for names** — name variations are common (Bob vs. Robert, Jr./Sr. suffixes). Use fuzzy matching or the Identity Match endpoint.
-3. **Expecting all fields to be present** — email and phone coverage varies. Check for empty arrays before accessing.
-4. **Confusing Identity and Identity Verification** — Identity retrieves bank-reported data. Identity Verification is a separate KYC product with document scanning and selfie matching.
-5. **Not handling address formatting differences** — institutions may return addresses in different formats. Normalize before comparing.
-6. **Storing PII in plain text** — identity data is sensitive. Encrypt at rest and limit access to authorized services only.
+1. **Assuming a single owner** - joint accounts return multiple `owners` entries. Always iterate through all owners when matching.
+2. **Using exact string matching for names** - name variations are common (Bob vs. Robert, Jr./Sr. suffixes). Use fuzzy matching or the Identity Match endpoint.
+3. **Expecting all fields to be present** - email and phone coverage varies. Check for empty arrays before accessing.
+4. **Confusing Identity and Identity Verification** - Identity retrieves bank-reported data. Identity Verification is a separate KYC product with document scanning and selfie matching.
+5. **Not handling address formatting differences** - institutions may return addresses in different formats. Normalize before comparing.
+6. **Storing PII in plain text** - identity data is sensitive. Encrypt at rest and limit access to authorized services only.
 
 ## See Also
 
-- [Plaid Link Setup](../plaid-link-setup/SKILL.md) — connect with identity product
-- [Plaid Account Verification](../plaid-account-verification/SKILL.md) — verify account ownership via Auth
-- [Plaid Error Handling](../plaid-error-handling/SKILL.md) — handle identity endpoint errors
+- [Plaid Link Setup](../plaid-link-setup/SKILL.md) - connect with identity product
+- [Plaid Account Verification](../plaid-account-verification/SKILL.md) - verify account ownership via Auth
+- [Plaid Error Handling](../plaid-error-handling/SKILL.md) - handle identity endpoint errors

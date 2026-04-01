@@ -17,16 +17,16 @@ When reviewing Plaid Link integration code, flag any of these patterns and sugge
 
 ### 1. Missing onExit handler
 
-**Flag** when `usePlaidLink` or `<PlaidLink>` is used without an `onExit` callback. Users who close Link without completing need graceful handling — analytics, retry prompts, or cleanup.
+**Flag** when `usePlaidLink` or `<PlaidLink>` is used without an `onExit` callback. Users who close Link without completing need graceful handling - analytics, retry prompts, or cleanup.
 
 ```tsx
-// BAD — no onExit
+// BAD - no onExit
 const { open, ready } = usePlaidLink({
   token: linkToken,
   onSuccess: (publicToken) => { /* ... */ },
 });
 
-// GOOD — handles exit
+// GOOD - handles exit
 const { open, ready } = usePlaidLink({
   token: linkToken,
   onSuccess: (publicToken, metadata) => { /* ... */ },
@@ -45,7 +45,7 @@ Look for: `usePlaidLink` or `PlaidLink` without `onExit` in the configuration ob
 **Flag** when the `onSuccess` callback sends the public token to the server but does not handle a failed exchange. The token exchange can fail even after a successful Link session (network error, expired token, server issue).
 
 ```tsx
-// BAD — fire-and-forget
+// BAD - fire-and-forget
 onSuccess: (publicToken) => {
   fetch("/api/exchange-token", {
     method: "POST",
@@ -53,7 +53,7 @@ onSuccess: (publicToken) => {
   });
 },
 
-// GOOD — handle failure
+// GOOD - handle failure
 onSuccess: async (publicToken, metadata) => {
   try {
     const res = await fetch("/api/exchange-token", {
@@ -75,10 +75,10 @@ Look for: `onSuccess` callbacks that call `fetch` or `axios` without `try/catch`
 **Flag** when Plaid products are passed as inline string literals instead of using the `Products` enum or a configuration-driven approach. String typos cause silent failures.
 
 ```typescript
-// BAD — typo-prone, no IDE autocompletion
+// BAD - typo-prone, no IDE autocompletion
 products: ["transaction", "auth"],  // "transaction" should be "transactions"
 
-// GOOD — enum with autocompletion
+// GOOD - enum with autocompletion
 import { Products } from "plaid";
 products: [Products.Transactions, Products.Auth],
 ```
@@ -90,7 +90,7 @@ Look for: `products:` arrays containing string literals like `"transactions"`, `
 **Flag** when `linkTokenCreate` is called without `redirect_uri` for applications that target OAuth institutions (Chase, Wells Fargo, Capital One, etc.). Without it, users at those banks see an error.
 
 ```typescript
-// BAD — no redirect_uri
+// BAD - no redirect_uri
 const response = await plaidClient.linkTokenCreate({
   user: { client_user_id: userId },
   client_name: "My App",
@@ -99,7 +99,7 @@ const response = await plaidClient.linkTokenCreate({
   language: "en",
 });
 
-// GOOD — OAuth-ready
+// GOOD - OAuth-ready
 const response = await plaidClient.linkTokenCreate({
   user: { client_user_id: userId },
   client_name: "My App",
@@ -117,7 +117,7 @@ Look for: `linkTokenCreate` calls without `redirect_uri` in production-facing co
 **Flag** when `linkTokenCreate` is called inside a React component body, `useEffect` without deps, or on every render. Link tokens should be fetched once and cached until expiration (4 hours).
 
 ```tsx
-// BAD — fetches on every render
+// BAD - fetches on every render
 function PlaidButton() {
   const [token, setToken] = useState("");
   useEffect(() => {
@@ -127,7 +127,7 @@ function PlaidButton() {
   return <button onClick={() => open()}>Connect</button>;
 }
 
-// GOOD — fetches once
+// GOOD - fetches once
 function PlaidButton() {
   const [token, setToken] = useState<string | null>(null);
   useEffect(() => {

@@ -30,7 +30,7 @@ Use this skill when the user:
    ```typescript
    const response = await plaidClient.transactionsRecurringGet({
      access_token: accessToken,
-     account_ids: accountIds, // optional — omit for all accounts
+     account_ids: accountIds, // optional - omit for all accounts
    });
 
    // Outflow streams: subscriptions, bills, loan payments
@@ -38,7 +38,7 @@ Use this skill when the user:
      console.log(
        `${stream.merchant_name ?? stream.description}: ` +
          `$${stream.average_amount.amount} ${stream.frequency} ` +
-         `(${stream.status}) — next: ${stream.predicted_next_date}`,
+         `(${stream.status}) - next: ${stream.predicted_next_date}`,
      );
    }
 
@@ -116,7 +116,7 @@ Use this skill when the user:
    for (const sub of subscriptions) {
      console.log(
        `  ${sub.merchant_name ?? sub.description}: ` +
-         `$${Math.abs(Number(sub.average_amount.amount)).toFixed(2)} — ` +
+         `$${Math.abs(Number(sub.average_amount.amount)).toFixed(2)} - ` +
          `next: ${sub.predicted_next_date}`,
      );
    }
@@ -185,15 +185,15 @@ The default sandbox institution (`ins_109508`) includes synthetic recurring tran
 
 ## Common Pitfalls
 
-1. **Calling too early** — recurring detection needs 60+ days of history. New items may return empty results or only `EARLY_DETECTION` streams.
-2. **Showing tombstoned streams as active** — `TOMBSTONED` means the subscription was cancelled. Filter by `status === "MATURE"` and `is_active === true` for current subscriptions.
-3. **Not refreshing periodically** — recurring streams update as new transactions arrive. Sync transactions before fetching recurring data for the latest results.
-4. **Ignoring amount variations** — subscriptions may have slight amount changes (tax adjustments, price increases). Use `average_amount` for display and `last_amount` for the most recent charge.
-5. **Not providing account_ids** — omitting `account_ids` returns streams for all accounts. For account-specific views, always pass the relevant IDs.
-6. **Confusing frequency with schedule** — `BIWEEKLY` (every 2 weeks) and `SEMI_MONTHLY` (1st and 15th) are different. Paychecks can be either depending on the employer.
+1. **Calling too early** - recurring detection needs 60+ days of history. New items may return empty results or only `EARLY_DETECTION` streams.
+2. **Showing tombstoned streams as active** - `TOMBSTONED` means the subscription was cancelled. Filter by `status === "MATURE"` and `is_active === true` for current subscriptions.
+3. **Not refreshing periodically** - recurring streams update as new transactions arrive. Sync transactions before fetching recurring data for the latest results.
+4. **Ignoring amount variations** - subscriptions may have slight amount changes (tax adjustments, price increases). Use `average_amount` for display and `last_amount` for the most recent charge.
+5. **Not providing account_ids** - omitting `account_ids` returns streams for all accounts. For account-specific views, always pass the relevant IDs.
+6. **Confusing frequency with schedule** - `BIWEEKLY` (every 2 weeks) and `SEMI_MONTHLY` (1st and 15th) are different. Paychecks can be either depending on the employer.
 
 ## See Also
 
-- [Plaid Transaction Sync](../plaid-transaction-sync/SKILL.md) — sync transaction data before recurring detection
-- [Plaid Category Mapping](../plaid-category-mapping/SKILL.md) — categorize recurring transactions
-- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) — test with synthetic recurring data
+- [Plaid Transaction Sync](../plaid-transaction-sync/SKILL.md) - sync transaction data before recurring detection
+- [Plaid Category Mapping](../plaid-category-mapping/SKILL.md) - categorize recurring transactions
+- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) - test with synthetic recurring data

@@ -138,7 +138,10 @@ Ask the agent to follow **`plaid-webhook-handling`** when implementing webhook r
 
 ## Skills
 
-All seventeen skill directories are listed below. Names match the folder under `skills/` (for example `plaid-api-reference`).
+12 of 17 skills are production-ready. Names match the folder under `skills/`.
+
+<details>
+<summary><strong>All 17 skills</strong></summary>
 
 | Skill | Status | Summary |
 | --- | --- | --- |
@@ -160,11 +163,18 @@ All seventeen skill directories are listed below. Names match the folder under `
 | `plaid-security-best-practices` | coming v0.7.0 | Token encryption, RLS, audit logging |
 | `plaid-production-readiness` | coming v0.7.0 | Production access checklist |
 
-Natural-language aliases you can use in prompts include **link setup**, **transaction sync**, **webhook handling**, **sandbox testing**, **category mapping**, **error handling**, **API reference**, **institution search**, **account verification**, **investment tracking**, **identity verification**, **recurring detection**, **React integration**, **Next.js integration**, **migration guide**, **security best practices**, and **production readiness**.
+You can reference skills by natural-language aliases: **link setup**, **transaction sync**, **webhook handling**, **sandbox testing**, **category mapping**, **error handling**, **API reference**, **institution search**, **account verification**, **investment tracking**, **identity verification**, **recurring detection**, **React integration**, **Next.js integration**, **migration guide**, **security best practices**, **production readiness**.
+
+</details>
 
 ---
 
 ## Rules
+
+All 7 rules are production-ready.
+
+<details>
+<summary><strong>All 7 rules</strong></summary>
 
 | Rule | Status | Scope | What it flags |
 | --- | --- | --- | --- |
@@ -176,13 +186,16 @@ Natural-language aliases you can use in prompts include **link setup**, **transa
 | `plaid-link-best-practices` | v0.4.0 | Link UI | Link integration issues and anti-patterns |
 | `plaid-token-storage` | v0.5.0 | Token storage | Insecure access token handling |
 
+</details>
+
 ---
 
 ## MCP tools
 
-The **`mcp-server/`** package exposes **30** tools (25 live in v0.5.0, 5 stubs; build with `npm run build`). Grouping matches how you would tier access in a real deployment.
+30 tools total (25 live, 5 stubs). Build with `cd mcp-server && npm run build`.
 
-### Read-only (no auth)
+<details>
+<summary><strong>Read-only (no auth) - 8 tools</strong></summary>
 
 | Tool | Purpose |
 | --- | --- |
@@ -195,7 +208,10 @@ The **`mcp-server/`** package exposes **30** tools (25 live in v0.5.0, 5 stubs; 
 | `listSandboxCredentials` | Sandbox test credentials |
 | `listCountryCoverage` | Country coverage |
 
-### Sandbox auth
+</details>
+
+<details>
+<summary><strong>Sandbox auth - 12 tools</strong></summary>
 
 | Tool | Purpose |
 | --- | --- |
@@ -212,7 +228,10 @@ The **`mcp-server/`** package exposes **30** tools (25 live in v0.5.0, 5 stubs; 
 | `getIdentity` | Identity data |
 | `getAuthNumbers` | Auth micro-deposit numbers |
 
-### Write / advanced
+</details>
+
+<details>
+<summary><strong>Write / advanced - 10 tools</strong></summary>
 
 | Tool | Purpose |
 | --- | --- |
@@ -226,6 +245,8 @@ The **`mcp-server/`** package exposes **30** tools (25 live in v0.5.0, 5 stubs; 
 | `getTransferIntent` | Transfer intent |
 | `verifyWebhookSignature` | Verify webhook signature |
 | `inspectAccessToken` | Inspect token metadata (debug) |
+
+</details>
 
 ---
 

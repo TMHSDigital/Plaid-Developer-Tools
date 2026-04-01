@@ -19,10 +19,10 @@ When reviewing code that calls `/transactions/sync`, flag any of these patterns 
 **Flag** when the cursor is stored in a local variable, module-level `let`, or in-memory cache without database persistence. Cursors must survive process restarts.
 
 ```typescript
-// BAD — cursor lost on restart
+// BAD - cursor lost on restart
 let cursor = "";
 
-// GOOD — cursor persisted per item
+// GOOD - cursor persisted per item
 const cursor = await db.getCursor(itemId) ?? "";
 ```
 
@@ -33,11 +33,11 @@ Look for: `let cursor`, `let nextCursor`, `let syncCursor`, `const cursor = ""` 
 **Flag** a single call to `transactionsSync` that does not check `has_more` and loop. A single call may return only a partial page of updates.
 
 ```typescript
-// BAD — may miss updates
+// BAD - may miss updates
 const response = await client.transactionsSync({ access_token, cursor });
 const transactions = response.data.added;
 
-// GOOD — drain all pages
+// GOOD - drain all pages
 let cursor = await db.getCursor(itemId) ?? "";
 let hasMore = true;
 while (hasMore) {
@@ -56,11 +56,11 @@ Look for: `transactionsSync` without a surrounding `while` or `do…while` that 
 **Flag** when `next_cursor` is written to the database before the added/modified/removed arrays are fully processed. If processing fails mid-batch, the cursor advances past unprocessed data.
 
 ```typescript
-// BAD — cursor saved before processing completes
+// BAD - cursor saved before processing completes
 await db.saveCursor(itemId, response.data.next_cursor);
 await processTransactions(response.data.added);
 
-// GOOD — save only after success
+// GOOD - save only after success
 await processTransactions(response.data.added);
 await db.saveCursor(itemId, response.data.next_cursor);
 ```
@@ -72,13 +72,13 @@ Look for: cursor save/update calls that appear before `process`, `insert`, `upse
 **Flag** when code passes `""` or `undefined` as the cursor despite having previously synced the item. An empty cursor triggers a full history replay, wasting API calls and risking duplicate records.
 
 ```typescript
-// BAD — always starts from scratch
+// BAD - always starts from scratch
 const response = await client.transactionsSync({
   access_token,
   cursor: "",
 });
 
-// GOOD — resume from stored cursor
+// GOOD - resume from stored cursor
 const cursor = await db.getCursor(itemId) ?? "";
 const response = await client.transactionsSync({
   access_token,

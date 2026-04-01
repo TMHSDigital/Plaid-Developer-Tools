@@ -105,7 +105,7 @@ Tools use the `plaid_` prefix (for example `plaid_syncTransactions`). Grouped by
 
 **Symlink the plugin for local Cursor development**
 
-- **Windows (PowerShell)** — run as Administrator if required for symlink creation:
+- **Windows (PowerShell)** - run as Administrator if required for symlink creation:
 
 ```powershell
 New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\.cursor\plugins\plaid-developer-tools" -Target (Get-Location)

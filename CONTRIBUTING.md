@@ -61,23 +61,23 @@ mcp-server/
 tests/
 ```
 
-- **`plugin.json`** — manifest (name, version, paths to skills/rules).
-- **`skills/`** — one directory per skill; each contains `SKILL.md`.
-- **`rules/`** — Cursor rules as `.mdc` files with YAML frontmatter.
+- **`plugin.json`** - manifest (name, version, paths to skills/rules).
+- **`skills/`** - one directory per skill; each contains `SKILL.md`.
+- **`rules/`** - Cursor rules as `.mdc` files with YAML frontmatter.
 
 ## Adding a Skill
 
 1. Add a **kebab-case** directory under `skills/`, e.g. `skills/plaid-example-flow/`.
 2. Create **`SKILL.md`** with YAML frontmatter including at least `name` and `description`.
 3. In the body, include these sections (use `##` headings with these titles):
-   - **Trigger** — when the skill should load.
-   - **Required Inputs** — what the agent or user must provide.
-   - **Workflow** — step-by-step guidance.
-   - **Key References** — docs, APIs, or repo paths.
-   - **Example Interaction** — short example prompt/response pattern.
-   - **MCP Usage** — when to use the companion MCP server, if relevant.
-   - **Common Pitfalls** — mistakes to avoid.
-   - **See Also** — links to related skills or rules.
+   - **Trigger** - when the skill should load.
+   - **Required Inputs** - what the agent or user must provide.
+   - **Workflow** - step-by-step guidance.
+   - **Key References** - docs, APIs, or repo paths.
+   - **Example Interaction** - short example prompt/response pattern.
+   - **MCP Usage** - when to use the companion MCP server, if relevant.
+   - **Common Pitfalls** - mistakes to avoid.
+   - **See Also** - links to related skills or rules.
 
 Match tone, formatting, and frontmatter style of existing skills in this repo.
 
@@ -85,9 +85,9 @@ Match tone, formatting, and frontmatter style of existing skills in this repo.
 
 1. Add a **`.mdc`** file under `rules/`, e.g. `rules/plaid-example.mdc`.
 2. Start with YAML **frontmatter**:
-   - `description` — one-line summary for humans and tooling.
-   - `alwaysApply` — `true` or `false` depending on whether the rule should apply globally.
-   - `globs` — optional glob patterns (e.g. TypeScript paths) when the rule is path-scoped.
+   - `description` - one-line summary for humans and tooling.
+   - `alwaysApply` - `true` or `false` depending on whether the rule should apply globally.
+   - `globs` - optional glob patterns (e.g. TypeScript paths) when the rule is path-scoped.
 
 3. Below the frontmatter, write the rule content in Markdown (constraints, patterns, anti-patterns).
 

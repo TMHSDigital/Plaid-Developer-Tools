@@ -7,9 +7,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - 5 live MCP tools: `plaid_sandboxSetVerificationStatus`, `plaid_simulateTransactions`, `plaid_refreshTransactions`, `plaid_removeItem`, `plaid_getItemStatus`
-- Production skill: `plaid-identity-verification` — identity data retrieval, match scoring, Identity Verification (KYC), joint account handling
-- Production skill: `plaid-recurring-detection` — inflow/outflow streams, frequency types, stream lifecycle, subscription tracking, income detection
-- Production rule: `plaid-token-storage` — flags localStorage, cookies, client-side code, unencrypted DB, and log output containing access tokens
+- Production skill: `plaid-identity-verification` - identity data retrieval, match scoring, Identity Verification (KYC), joint account handling
+- Production skill: `plaid-recurring-detection` - inflow/outflow streams, frequency types, stream lifecycle, subscription tracking, income detection
+- Production rule: `plaid-token-storage` - flags localStorage, cookies, client-side code, unencrypted DB, and log output containing access tokens
 
 ### Changed
 
@@ -22,9 +22,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - 6 live MCP tools: `plaid_getBalance`, `plaid_syncTransactions`, `plaid_getRecurring`, `plaid_getInvestmentHoldings`, `plaid_getIdentity`, `plaid_getAuthNumbers`
-- Production skill: `plaid-account-verification` — Instant Auth, micro-deposits, same-day micro-deposits, database match, ACH payment patterns
-- Production skill: `plaid-investment-tracking` — holdings, securities, investment transactions, portfolio aggregation, cost basis
-- Production rule: `plaid-link-best-practices` — flags missing onExit, unhandled token exchange errors, hardcoded products, missing OAuth, render-cycle token creation
+- Production skill: `plaid-account-verification` - Instant Auth, micro-deposits, same-day micro-deposits, database match, ACH payment patterns
+- Production skill: `plaid-investment-tracking` - holdings, securities, investment transactions, portfolio aggregation, cost basis
+- Production rule: `plaid-link-best-practices` - flags missing onExit, unhandled token exchange errors, hardcoded products, missing OAuth, render-cycle token creation
 
 ### Changed
 
@@ -36,7 +36,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - 6 live sandbox MCP tools: `plaid_createLinkToken`, `plaid_exchangePublicToken`, `plaid_createSandboxItem`, `plaid_resetSandboxLogin`, `plaid_fireSandboxWebhook`, `plaid_getAccounts`
-- Production rule: `plaid-sync-cursor` — flags missing cursor persistence, incomplete has_more loops, and premature cursor saves in transaction sync code
+- Production rule: `plaid-sync-cursor` - flags missing cursor persistence, incomplete has_more loops, and premature cursor saves in transaction sync code
 
 ### Changed
 

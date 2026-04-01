@@ -42,9 +42,9 @@ Use this skill when the user:
      access_token: accessToken,
    });
 
-   // response.data.holdings — array of positions
-   // response.data.securities — details for each security
-   // response.data.accounts — investment accounts with balances
+   // response.data.holdings - array of positions
+   // response.data.securities - details for each security
+   // response.data.accounts - investment accounts with balances
 
    for (const holding of response.data.holdings) {
      const security = response.data.securities.find(
@@ -81,9 +81,9 @@ Use this skill when the user:
 
    for (const tx of txResponse.data.investment_transactions) {
      // tx.type: "buy" | "sell" | "dividend" | "cash" | "transfer" | "fee"
-     // tx.amount — positive for outflows (buys), negative for inflows (dividends)
+     // tx.amount - positive for outflows (buys), negative for inflows (dividends)
      // tx.quantity, tx.price, tx.security_id
-     console.log(`${tx.type}: ${tx.name} — $${tx.amount}`);
+     console.log(`${tx.type}: ${tx.name} - $${tx.amount}`);
    }
    ```
 
@@ -202,15 +202,15 @@ const holdingsResponse = await plaidClient.investmentsHoldingsGet({
 
 ## Common Pitfalls
 
-1. **Assuming real-time data** — investment holdings update once daily, not in real-time. The `HOLDINGS: DEFAULT_UPDATE` webhook fires when new data is available.
-2. **Ignoring security type** — different security types need different display logic. Options have strike prices and expiration dates; crypto has different decimal precision.
-3. **Missing cost basis** — not all brokerages provide cost basis. Always check for `null` before calculating gain/loss.
-4. **Not handling pagination** — `investmentsTransactionsGet` may not return all transactions in one call. Check `total_investment_transactions` and paginate with `offset`.
-5. **Treating amount signs inconsistently** — in investment transactions, positive `amount` means money left the account (buy), negative means money entered (dividend, sell proceeds).
-6. **Forgetting cash positions** — holdings include a `cash` security type representing uninvested cash in the brokerage account. Include it in total value calculations.
+1. **Assuming real-time data** - investment holdings update once daily, not in real-time. The `HOLDINGS: DEFAULT_UPDATE` webhook fires when new data is available.
+2. **Ignoring security type** - different security types need different display logic. Options have strike prices and expiration dates; crypto has different decimal precision.
+3. **Missing cost basis** - not all brokerages provide cost basis. Always check for `null` before calculating gain/loss.
+4. **Not handling pagination** - `investmentsTransactionsGet` may not return all transactions in one call. Check `total_investment_transactions` and paginate with `offset`.
+5. **Treating amount signs inconsistently** - in investment transactions, positive `amount` means money left the account (buy), negative means money entered (dividend, sell proceeds).
+6. **Forgetting cash positions** - holdings include a `cash` security type representing uninvested cash in the brokerage account. Include it in total value calculations.
 
 ## See Also
 
-- [Plaid Link Setup](../plaid-link-setup/SKILL.md) — connect brokerage accounts
-- [Plaid Account Verification](../plaid-account-verification/SKILL.md) — verify investment account ownership
-- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) — test with synthetic investment data
+- [Plaid Link Setup](../plaid-link-setup/SKILL.md) - connect brokerage accounts
+- [Plaid Account Verification](../plaid-account-verification/SKILL.md) - verify investment account ownership
+- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) - test with synthetic investment data

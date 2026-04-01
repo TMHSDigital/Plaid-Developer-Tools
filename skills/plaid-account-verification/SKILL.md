@@ -23,7 +23,7 @@ Use this skill when the user:
 
 ## Workflow
 
-1. **Instant Auth** — the primary path. Covers ~80% of US depository accounts. Returns account and routing numbers immediately after Link:
+1. **Instant Auth** - the primary path. Covers ~80% of US depository accounts. Returns account and routing numbers immediately after Link:
 
    ```typescript
    import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from "plaid";
@@ -51,7 +51,7 @@ Use this skill when the user:
    // Each entry: { account_id, account, routing, wire_routing }
    ```
 
-2. **Micro-deposit fallback** — for institutions without Instant Auth support. Plaid deposits two small amounts (typically $0.01–$0.10) into the user's account:
+2. **Micro-deposit fallback** - for institutions without Instant Auth support. Plaid deposits two small amounts (typically $0.01–$0.10) into the user's account:
 
    ```typescript
    // Create Link token requesting auth with micro-deposit fallback
@@ -69,7 +69,7 @@ Use this skill when the user:
 
    The user completes Link, selects their institution, and enters credentials. If Instant Auth is unavailable, Plaid initiates micro-deposits automatically. The user must return 1–3 business days later to verify the amounts.
 
-3. **Same-day micro-deposits** — micro-deposits that arrive on the same business day (if initiated before the cutoff):
+3. **Same-day micro-deposits** - micro-deposits that arrive on the same business day (if initiated before the cutoff):
 
    ```typescript
    const tokenResponse = await plaidClient.linkTokenCreate({
@@ -84,7 +84,7 @@ Use this skill when the user:
    });
    ```
 
-4. **Database match** — verifies account ownership by matching the account holder's identity against the institution's records, without any deposits:
+4. **Database match** - verifies account ownership by matching the account holder's identity against the institution's records, without any deposits:
 
    ```typescript
    const tokenResponse = await plaidClient.linkTokenCreate({
@@ -99,7 +99,7 @@ Use this skill when the user:
    });
    ```
 
-5. **Auth number formats** — the response includes different number formats depending on the country:
+5. **Auth number formats** - the response includes different number formats depending on the country:
 
    | Field | Format | Region |
    |-------|--------|--------|
@@ -111,9 +111,9 @@ Use this skill when the user:
 6. **Handling verification status webhooks:**
 
    ```typescript
-   // VERIFICATION_EXPIRED — user didn't verify micro-deposits in time
-   // AUTOMATICALLY_VERIFIED — micro-deposits verified without user input
-   // DATABASE_MATCHED — database match succeeded
+   // VERIFICATION_EXPIRED - user didn't verify micro-deposits in time
+   // AUTOMATICALLY_VERIFIED - micro-deposits verified without user input
+   // DATABASE_MATCHED - database match succeeded
 
    app.post("/api/plaid-webhook", async (req, res) => {
      const { webhook_type, webhook_code, item_id } = req.body;
@@ -124,7 +124,7 @@ Use this skill when the user:
            // Prompt user to restart verification
            break;
          case "AUTOMATICALLY_VERIFIED":
-           // Fetch auth numbers — account is now verified
+           // Fetch auth numbers - account is now verified
            const authResponse = await plaidClient.authGet({
              access_token: await getAccessToken(item_id),
            });
@@ -188,15 +188,15 @@ Available sandbox verification statuses: `automatically_verified`, `verification
 
 ## Common Pitfalls
 
-1. **Not handling micro-deposit fallback** — not all institutions support Instant Auth. Without `automated_microdeposits_enabled`, users at unsupported institutions see an error.
-2. **Storing routing numbers in plain text** — treat account and routing numbers as PII. Encrypt at rest, restrict access, and audit usage.
-3. **Ignoring verification expiration** — micro-deposits expire after 14 days. Listen for `VERIFICATION_EXPIRED` webhooks and prompt users to restart.
-4. **Using auth numbers before verification completes** — for micro-deposit flows, `authGet` returns numbers only after the user verifies the amounts. Check the verification status first.
-5. **Assuming all accounts have ACH numbers** — credit cards and loan accounts don't have routing numbers. Filter to `depository` accounts before calling `authGet`.
-6. **Not requesting the auth product in Link** — if `auth` isn't in the `products` array during Link token creation, `authGet` will fail with `PRODUCT_NOT_READY`.
+1. **Not handling micro-deposit fallback** - not all institutions support Instant Auth. Without `automated_microdeposits_enabled`, users at unsupported institutions see an error.
+2. **Storing routing numbers in plain text** - treat account and routing numbers as PII. Encrypt at rest, restrict access, and audit usage.
+3. **Ignoring verification expiration** - micro-deposits expire after 14 days. Listen for `VERIFICATION_EXPIRED` webhooks and prompt users to restart.
+4. **Using auth numbers before verification completes** - for micro-deposit flows, `authGet` returns numbers only after the user verifies the amounts. Check the verification status first.
+5. **Assuming all accounts have ACH numbers** - credit cards and loan accounts don't have routing numbers. Filter to `depository` accounts before calling `authGet`.
+6. **Not requesting the auth product in Link** - if `auth` isn't in the `products` array during Link token creation, `authGet` will fail with `PRODUCT_NOT_READY`.
 
 ## See Also
 
-- [Plaid Link Setup](../plaid-link-setup/SKILL.md) — connect accounts with the Auth product
-- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) — test verification flows in sandbox
-- [Plaid Error Handling](../plaid-error-handling/SKILL.md) — handle auth-specific errors
+- [Plaid Link Setup](../plaid-link-setup/SKILL.md) - connect accounts with the Auth product
+- [Plaid Sandbox Testing](../plaid-sandbox-testing/SKILL.md) - test verification flows in sandbox
+- [Plaid Error Handling](../plaid-error-handling/SKILL.md) - handle auth-specific errors
