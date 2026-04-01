@@ -1,6 +1,9 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { stubResponse } from "../types.js";
+import { textResponse, errorResponse } from "../types.js";
+import { getPlaidClient } from "./utils.js";
+import { CountryCode, Products } from "plaid";
+import { randomUUID } from "node:crypto";
 
 const inputSchema = {
   products: z
@@ -21,7 +24,36 @@ export function register(server: McpServer): void {
     "Create a Plaid Link token for sandbox testing",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_createLinkToken", "v0.3.0");
+      try {
+        const client = getPlaidClient();
+        const countryCodes = args.country_codes.map(
+          (c) => c.toUpperCase() as CountryCode,
+        );
+        const products = args.products.map((p) => p as Products);
+
+        const response = await client.linkTokenCreate({
+          user: { client_user_id: randomUUID() },
+          client_name: "Plaid MCP",
+          products,
+          country_codes: countryCodes,
+          language: args.language,
+          ...(args.webhook ? { webhook: args.webhook } : {}),
+        });
+
+        return textResponse(
+          JSON.stringify(
+            {
+              link_token: response.data.link_token,
+              expiration: response.data.expiration,
+              request_id: response.data.request_id,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (error) {
+        return errorResponse(error);
+      }
     },
   );
 }

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-04-01
+
+### Added
+
+- 6 live sandbox MCP tools: `plaid_createLinkToken`, `plaid_exchangePublicToken`, `plaid_createSandboxItem`, `plaid_resetSandboxLogin`, `plaid_fireSandboxWebhook`, `plaid_getAccounts`
+- Production rule: `plaid-sync-cursor` — flags missing cursor persistence, incomplete has_more loops, and premature cursor saves in transaction sync code
+
+### Changed
+
+- `plaid_createSandboxItem` auto-exchanges the public token, returning `access_token` and `item_id` in one call
+- `plaid_getAccounts` moved from v0.4.0 to v0.3.0 (needed to verify sandbox items)
+- Enhanced `plaid-sandbox-testing` skill with automated MCP workflow, custom sandbox users, OAuth testing, and updated tool table
+
 ## [0.2.0] - 2026-04-01
 
 ### Added

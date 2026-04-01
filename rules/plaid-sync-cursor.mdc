@@ -1,5 +1,5 @@
 ---
-description: Flag transaction sync implementations that don't persist cursors, miss the has_more loop, or risk losing cursor state between sync calls. Coming in v0.3.0.
+description: Flag transaction sync implementations that don't persist cursors, miss the has_more loop, or risk losing cursor state between sync calls.
 alwaysApply: false
 globs:
   - "**/*sync*.ts"
@@ -10,23 +10,88 @@ globs:
 
 # Plaid Sync Cursor Persistence
 
-> **Coming in v0.3.0** - This rule will enforce proper cursor management in transaction sync implementations.
-
-When reviewing transaction sync code, enforce proper cursor persistence and loop handling:
+When reviewing code that calls `/transactions/sync`, flag any of these patterns and suggest the corrected approach.
 
 ## Patterns to Flag
 
-1. **Missing cursor persistence** - calls to `transactionsSync` that don't save `next_cursor` to a database or persistent store after processing. In-memory cursor storage is lost on restart.
+### 1. In-memory cursor storage
 
-2. **Missing has_more loop** - a single call to `transactionsSync` without checking `has_more` and looping. A single call may not return all available updates.
+**Flag** when the cursor is stored in a local variable, module-level `let`, or in-memory cache without database persistence. Cursors must survive process restarts.
 
-3. **Lost cursor state** - calling `transactionsSync` with an empty cursor when a valid cursor exists. This triggers a full history replay, wasting API calls and risking duplicates.
+```typescript
+// BAD — cursor lost on restart
+let cursor = "";
 
-4. **Cursor saved before processing** - saving the cursor before successfully processing all added/modified/removed transactions. If processing fails, the cursor advances past unprocessed data.
+// GOOD — cursor persisted per item
+const cursor = await db.getCursor(itemId) ?? "";
+```
+
+Look for: `let cursor`, `let nextCursor`, `let syncCursor`, `const cursor = ""` at module or function scope without a preceding database read.
+
+### 2. Missing has_more loop
+
+**Flag** a single call to `transactionsSync` that does not check `has_more` and loop. A single call may return only a partial page of updates.
+
+```typescript
+// BAD — may miss updates
+const response = await client.transactionsSync({ access_token, cursor });
+const transactions = response.data.added;
+
+// GOOD — drain all pages
+let cursor = await db.getCursor(itemId) ?? "";
+let hasMore = true;
+while (hasMore) {
+  const response = await client.transactionsSync({ access_token, cursor });
+  await processPage(response.data.added, response.data.modified, response.data.removed);
+  cursor = response.data.next_cursor;
+  hasMore = response.data.has_more;
+}
+await db.saveCursor(itemId, cursor);
+```
+
+Look for: `transactionsSync` without a surrounding `while` or `do…while` that checks `has_more`.
+
+### 3. Cursor saved before processing
+
+**Flag** when `next_cursor` is written to the database before the added/modified/removed arrays are fully processed. If processing fails mid-batch, the cursor advances past unprocessed data.
+
+```typescript
+// BAD — cursor saved before processing completes
+await db.saveCursor(itemId, response.data.next_cursor);
+await processTransactions(response.data.added);
+
+// GOOD — save only after success
+await processTransactions(response.data.added);
+await db.saveCursor(itemId, response.data.next_cursor);
+```
+
+Look for: cursor save/update calls that appear before `process`, `insert`, `upsert`, or `handle` calls on the transaction arrays.
+
+### 4. Empty-string cursor reuse
+
+**Flag** when code passes `""` or `undefined` as the cursor despite having previously synced the item. An empty cursor triggers a full history replay, wasting API calls and risking duplicate records.
+
+```typescript
+// BAD — always starts from scratch
+const response = await client.transactionsSync({
+  access_token,
+  cursor: "",
+});
+
+// GOOD — resume from stored cursor
+const cursor = await db.getCursor(itemId) ?? "";
+const response = await client.transactionsSync({
+  access_token,
+  cursor,
+});
+```
+
+Look for: hardcoded `cursor: ""` or `cursor: undefined` without a fallback read from persistent storage.
 
 ## What to Do
 
-- Always loop until `has_more` is false
-- Persist the cursor only after successfully processing all changes
-- Store cursors in a database table alongside the item_id
-- Use empty string cursor only for initial sync
+- Always loop until `has_more` is `false`
+- Persist the cursor only **after** successfully processing all added/modified/removed changes in the page
+- Store cursors in a database table keyed by `item_id`
+- Use an empty-string cursor only for the initial sync of a brand-new item
+- Wrap the sync loop in a try/catch so a failed page does not advance the cursor
