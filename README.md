@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.png" alt="Plaid Developer Tools" width="180" />
+
 # Plaid Developer Tools
 
 **Cursor plugin and MCP companion for building on Plaid**
