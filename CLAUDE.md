@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-The **Plaid Developer Tools** Cursor plugin is at **v0.5.0**. It accelerates Plaid integration work with **17 skills**, **7 rules**, and a companion MCP server exposing **30 tools** for Link, transactions, webhooks, sandbox flows, and API discovery. Skills encode workflows; rules enforce secrets handling, errors, webhook safety, sync cursor persistence, Link best practices, and token storage; the MCP server has 25 live tools (reference data, institutions, sandbox, Link tokens, accounts, balances, transactions, investments, identity, auth, item management) and 5 stubs for future releases.
+The **Plaid Developer Tools** Cursor plugin is at **v0.6.0**. It accelerates Plaid integration work with **17 skills**, **7 rules**, and a companion MCP server exposing **30 tools** for Link, transactions, webhooks, sandbox flows, and API discovery. Skills encode workflows; rules enforce secrets handling, errors, webhook safety, sync cursor persistence, Link best practices, and token storage; the MCP server has 28 live tools (reference data, institutions, sandbox, Link tokens, accounts, balances, transactions, investments, identity, auth, item management, liabilities, webhook verification) and 2 stubs for future releases.
 
 ## Plugin Architecture
 
@@ -33,8 +33,8 @@ mcp-server/                  - MCP server with 30 tools
 | plaid-recurring-detection | Recurring transaction streams, subscription detection, income recognition |
 | plaid-migration-guide | Migration from other aggregators (coming v0.7.0) |
 | plaid-security-best-practices | Token encryption, RLS, audit logging (coming v0.7.0) |
-| plaid-react-integration | React hooks and components (coming v0.6.0) |
-| plaid-nextjs-integration | Next.js App Router patterns (coming v0.6.0) |
+| plaid-react-integration | React hooks, context providers, error boundaries, update mode |
+| plaid-nextjs-integration | Next.js App Router routes, server actions, middleware auth, webhook handlers |
 | plaid-production-readiness | Production access checklist (coming v0.7.0) |
 
 ## Rules (7 total)

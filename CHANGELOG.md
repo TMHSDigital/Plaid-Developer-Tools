@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2026-04-02
+
+### Added
+
+- 3 live MCP tools: `plaid_updateItemWebhook`, `plaid_getLiabilities`, `plaid_verifyWebhookSignature`
+- Production skill: `plaid-react-integration` - usePlaidLink hook, PlaidContext provider, error boundaries, reconnection UI, TypeScript types
+- Production skill: `plaid-nextjs-integration` - App Router API routes, server-only Plaid client, middleware auth, webhook handler, server actions
+
+### Changed
+
+- Re-tagged 2 MCP tool stubs (`getTransferIntent`, `inspectAccessToken`) from v0.6.0 to v0.7.0
+- `plaid_verifyWebhookSignature` verifies body hash against JWT claims and fetches the verification key from Plaid
+- `plaid_getLiabilities` supports optional `account_ids` filter for scoping to specific liability accounts
+
 ## [0.5.0] - 2026-04-01
 
 ### Added

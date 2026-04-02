@@ -12,7 +12,7 @@ export function register(server: McpServer): void {
     "Decode and display access token metadata including item_id, institution, and products",
     inputSchema,
     async (args) => {
-      return stubResponse("plaid_inspectAccessToken", "v0.6.0");
+      return stubResponse("plaid_inspectAccessToken", "v0.7.0");
     },
   );
 }

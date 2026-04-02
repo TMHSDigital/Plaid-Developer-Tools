@@ -36,7 +36,7 @@ import { register as registerInspectAccessToken } from "./tools/inspectAccessTok
 
 const server = new McpServer({
   name: "plaid-mcp",
-  version: "0.5.0",
+  version: "0.6.0",
 });
 
 registerListCategories(server);

@@ -6,7 +6,7 @@
 
 **Cursor plugin and MCP companion for building on Plaid**
 
-[![Version](https://img.shields.io/badge/version-0.5.0-3B5CFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAyTDIyIDEyTDEyIDIyTDIgMTJaIi8+PC9zdmc+)](https://github.com/TMHSDigital/Plaid-Developer-Tools)
+[![Version](https://img.shields.io/badge/version-0.6.0-3B5CFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAyTDIyIDEyTDEyIDIyTDIgMTJaIi8+PC9zdmc+)](https://github.com/TMHSDigital/Plaid-Developer-Tools)
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 [![CI](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/ci.yml?branch=main&label=CI&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/ci.yml)
 [![Validate](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/validate.yml?branch=main&label=Validate&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/validate.yml)
@@ -22,7 +22,7 @@
 
 ## Overview
 
-Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages agent skills, editor rules, and a TypeScript **MCP server** (`mcp-server/`) so you can design, debug, and ship Plaid integrations without leaving the IDE. Production coverage today is **v0.5.0** with twelve skills, seven rules, and twenty-five live MCP tools; the rest are staged stubs with version targets on the [roadmap](ROADMAP.md).
+Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages agent skills, editor rules, and a TypeScript **MCP server** (`mcp-server/`) so you can design, debug, and ship Plaid integrations without leaving the IDE. Production coverage today is **v0.6.0** with fourteen skills, seven rules, and twenty-eight live MCP tools; the rest are staged stubs with version targets on the [roadmap](ROADMAP.md).
 
 <table>
 <tr>
@@ -34,7 +34,7 @@ Plaid Developer Tools is a **Cursor** plugin by **TMHSDigital** that packages ag
 | --- | --- |
 | **Skills** | Guided workflows: Link, `/transactions/sync`, webhooks, sandbox, categories, errors, and future topics |
 | **Rules** | Guardrails: `plaid-secrets`, `plaid-error-handling`, `plaid-env-safety`, and upcoming checks |
-| **MCP** | Thirty tools (25 live, 5 stubs) for institutions, items, balances, sync, investments, identity, webhooks, and more |
+| **MCP** | Thirty tools (28 live, 2 stubs) for institutions, items, balances, sync, investments, identity, webhooks, and more |
 
 </td>
 <td width="50%">
@@ -138,7 +138,7 @@ Ask the agent to follow **`plaid-webhook-handling`** when implementing webhook r
 
 ## Skills
 
-12 of 17 skills are production-ready. Names match the folder under `skills/`.
+14 of 17 skills are production-ready. Names match the folder under `skills/`.
 
 <details>
 <summary><strong>All 17 skills</strong></summary>
@@ -157,8 +157,8 @@ Ask the agent to follow **`plaid-webhook-handling`** when implementing webhook r
 | `plaid-investment-tracking` | :white_check_mark: Live | Holdings, securities, portfolio aggregation |
 | `plaid-identity-verification` | :white_check_mark: Live | KYC flows, identity data, match scoring |
 | `plaid-recurring-detection` | :white_check_mark: Live | Recurring transaction detection |
-| `plaid-react-integration` | :construction: v0.6.0 | React hooks and patterns |
-| `plaid-nextjs-integration` | :construction: v0.6.0 | Next.js App Router patterns |
+| `plaid-react-integration` | :white_check_mark: Live | React hooks, context, error boundaries |
+| `plaid-nextjs-integration` | :white_check_mark: Live | Next.js App Router, API routes, server actions |
 | `plaid-migration-guide` | :construction: v0.7.0 | Migrate from other aggregators |
 | `plaid-security-best-practices` | :construction: v0.7.0 | Token encryption, RLS, audit logging |
 | `plaid-production-readiness` | :construction: v0.7.0 | Production access checklist |
@@ -192,7 +192,7 @@ All 7 rules are production-ready.
 
 ## MCP tools
 
-30 tools total (25 live, 5 stubs). Build with `cd mcp-server && npm run build`.
+30 tools total (28 live, 2 stubs). Build with `cd mcp-server && npm run build`.
 
 <details>
 <summary><strong>Read-only (no auth) - 8 tools</strong></summary>
@@ -240,11 +240,11 @@ All 7 rules are production-ready.
 | `refreshTransactions` | :white_check_mark: | Refresh transactions |
 | `removeItem` | :white_check_mark: | Remove Item |
 | `getItemStatus` | :white_check_mark: | Item status |
-| `updateItemWebhook` | :construction: v0.6.0 | Update Item webhook URL |
-| `getLiabilities` | :construction: v0.6.0 | Liabilities |
-| `getTransferIntent` | :construction: v0.6.0 | Transfer intent |
-| `verifyWebhookSignature` | :construction: v0.6.0 | Verify webhook signature |
-| `inspectAccessToken` | :construction: v0.6.0 | Inspect token metadata (debug) |
+| `updateItemWebhook` | :white_check_mark: | Update Item webhook URL |
+| `getLiabilities` | :white_check_mark: | Liabilities |
+| `getTransferIntent` | :construction: v0.7.0 | Transfer intent |
+| `verifyWebhookSignature` | :white_check_mark: | Verify webhook signature |
+| `inspectAccessToken` | :construction: v0.7.0 | Inspect token metadata (debug) |
 
 </details>
 
@@ -285,8 +285,8 @@ Summary aligned with [ROADMAP.md](ROADMAP.md):
 | **v0.2.0** | Read-only MCP tools, `plaid-api-reference`, `plaid-institution-search`, `plaid-webhook-security` |
 | **v0.3.0** | Sandbox MCP tools, `plaid-sync-cursor`, `plaid-sandbox-testing` enhancements |
 | **v0.4.0** | Full API tools, `plaid-account-verification`, `plaid-investment-tracking`, `plaid-link-best-practices` |
-| **v0.5.0** (current) | Identity, recurring detection, `plaid-token-storage`, 5 advanced MCP tools |
-| **v0.6.0** | `plaid-react-integration`, `plaid-nextjs-integration` |
+| **v0.5.0** | Identity, recurring detection, `plaid-token-storage`, 5 advanced MCP tools |
+| **v0.6.0** (current) | `plaid-react-integration`, `plaid-nextjs-integration`, 3 MCP tools |
 | **v0.7.0** | `plaid-migration-guide`, `plaid-security-best-practices`, `plaid-production-readiness` |
 | **v1.0.0** | Full polish, 17 skills, 7 rules, 30 MCP tools stable |
 
