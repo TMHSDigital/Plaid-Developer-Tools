@@ -1,0 +1,33 @@
+{
+  "accent": "#00d084",
+  "accentLight": "#6ee7b7",
+  "heroGradientFrom": "#0a1117",
+  "heroGradientTo": "#0d2a1f",
+  "favicon": "assets/logo.png",
+  "ogImage": "assets/logo.png",
+  "installSteps": [
+    "Clone the repository: <code>git clone https://github.com/TMHSDigital/Plaid-Developer-Tools.git</code>",
+    "Open the folder in <strong>Cursor IDE</strong>",
+    "Install MCP server: <code>cd mcp-server && npm install</code>",
+    "Set your Plaid credentials: <code>PLAID_CLIENT_ID</code> and <code>PLAID_SECRET</code>",
+    "Start using the 17 AI skills and 30 MCP tools"
+  ],
+  "links": {
+    "github": "https://github.com/TMHSDigital/Plaid-Developer-Tools"
+  },
+  "quickStart": {
+    "title": "Get started with Plaid sandbox",
+    "command": "cd mcp-server && npm install && npm start"
+  },
+  "compatibility": {
+    "cursor": "0.49+",
+    "os": ["Windows", "macOS", "Linux"],
+    "node": "18+",
+    "claude": "Claude Code compatible"
+  },
+  "relatedTools": [
+    { "name": "Monday Cursor Plugin", "url": "https://tmhsdigital.github.io/Monday-Cursor-Plugin/", "description": "Monday.com project management integration" },
+    { "name": "Docker Developer Tools", "url": "https://tmhsdigital.github.io/Docker-Developer-Tools/", "description": "Container management and Dockerfile support" },
+    { "name": "Developer Tools Directory", "url": "https://tmhsdigital.github.io/Developer-Tools-Directory/", "description": "Browse all TMHSDigital developer tools" }
+  ]
+}
