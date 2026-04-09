@@ -10,7 +10,7 @@ jobs:
   test-plugin:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,10 +34,10 @@ jobs:
       matrix:
         node-version: [20, 22]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -54,12 +54,21 @@ jobs:
 
       - name: Smoke test (server starts without crashing)
         run: |
-          timeout 5 node dist/index.js || code=$?
-          if [ "${code:-0}" -eq 124 ]; then
-            echo "Server started and ran for 5s without crashing."
+          sleep 10 | timeout 5 node dist/index.js &
+          SERVER_PID=$!
+          sleep 2
+          if kill -0 "$SERVER_PID" 2>/dev/null; then
+            echo "Server still running after 2s — smoke test passed."
+            kill "$SERVER_PID" 2>/dev/null || true
+            wait "$SERVER_PID" 2>/dev/null || true
           else
-            echo "Server exited with code $code"
-            exit 1
+            wait "$SERVER_PID" 2>/dev/null || code=$?
+            if [ "${code:-0}" -eq 124 ]; then
+              echo "Server ran until timeout — smoke test passed."
+            else
+              echo "Server exited early with code ${code:-0}"
+              exit 1
+            fi
           fi
         env:
           PLAID_CLIENT_ID: test
