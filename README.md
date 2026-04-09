@@ -1,22 +1,46 @@
-<div align="center">
+<p align="center">
+  <img src="assets/logo.png" alt="Plaid Developer Tools" width="120" />
+</p>
 
-<img src="assets/logo.png" alt="Plaid Developer Tools" width="180" />
+<h1 align="center">Plaid Developer Tools</h1>
 
-# Plaid Developer Tools
+<p align="center">
+  <strong>Cursor plugin and MCP companion for building on Plaid</strong>
+</p>
 
-**Cursor plugin and MCP companion for building on Plaid**
+<!-- Row 1: Identity -->
+<p align="center">
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/releases"><img src="https://img.shields.io/badge/version-0.6.0-00d084?style=flat-square" alt="Version" /></a>
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/releases"><img src="https://img.shields.io/github/v/release/TMHSDigital/Plaid-Developer-Tools?style=flat-square&color=00d084&label=release" alt="Release" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-CC--BY--NC--ND--4.0-384d54?style=flat-square" alt="License" /></a>
+  <a href="https://tmhsdigital.github.io/Plaid-Developer-Tools/"><img src="https://img.shields.io/badge/docs-website-00d084?style=flat-square" alt="Docs" /></a>
+</p>
 
-[![Version](https://img.shields.io/badge/version-0.6.0-3B5CFF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0xMiAyTDIyIDEyTDEyIDIyTDIgMTJaIi8+PC9zdmc+)](https://github.com/TMHSDigital/Plaid-Developer-Tools)
-[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-[![CI](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/ci.yml?branch=main&label=CI&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/ci.yml)
-[![Validate](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/validate.yml?branch=main&label=Validate&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/validate.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/codeql.yml?branch=main&label=CodeQL&logo=githubactions&style=for-the-badge)](https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/codeql.yml)
+<!-- Row 2: CI -->
+<p align="center">
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/ci.yml?branch=main&style=flat-square&label=CI" alt="CI" /></a>
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/validate.yml"><img src="https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/validate.yml?branch=main&style=flat-square&label=validate" alt="Validate" /></a>
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/actions/workflows/codeql.yml"><img src="https://img.shields.io/github/actions/workflow/status/TMHSDigital/Plaid-Developer-Tools/codeql.yml?branch=main&style=flat-square&label=CodeQL" alt="CodeQL" /></a>
+</p>
 
-**17 skills** - **7 rules** - **30 MCP tools**
+<!-- Row 3: Community -->
+<p align="center">
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/stargazers"><img src="https://img.shields.io/github/stars/TMHSDigital/Plaid-Developer-Tools?style=flat-square&color=384d54" alt="Stars" /></a>
+  <a href="https://github.com/TMHSDigital/Plaid-Developer-Tools/issues"><img src="https://img.shields.io/github/issues/TMHSDigital/Plaid-Developer-Tools?style=flat-square&color=384d54" alt="Issues" /></a>
+</p>
 
-[Features](#skills) - [Rules](#rules) - [MCP tools](#mcp-tools) - [Install](#installation) - [Config](#configuration) - [Roadmap](#roadmap)
+<p align="center">
+  <strong>17 skills</strong> &nbsp;&bull;&nbsp; <strong>7 rules</strong> &nbsp;&bull;&nbsp; <strong>30 MCP tools</strong>
+</p>
 
-</div>
+<p align="center">
+  <a href="#skills">Features</a> &nbsp;&bull;&nbsp;
+  <a href="#rules">Rules</a> &nbsp;&bull;&nbsp;
+  <a href="#mcp-tools">MCP tools</a> &nbsp;&bull;&nbsp;
+  <a href="#installation">Install</a> &nbsp;&bull;&nbsp;
+  <a href="#configuration">Config</a> &nbsp;&bull;&nbsp;
+  <a href="#roadmap">Roadmap</a>
+</p>
 
 ---
 
