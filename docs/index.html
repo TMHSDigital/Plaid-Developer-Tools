@@ -1004,15 +1004,15 @@
       <div class="cat-body">
         <ol class="install-steps">
           
-          <li><span>Clone the repository: <code>git clone https://github.com/TMHSDigital/Plaid-Developer-Tools.git</code></span></li>
+          <li><span><strong>Clone and build:</strong><br><code>git clone https://github.com/TMHSDigital/Plaid-Developer-Tools.git</code><br><code>cd Plaid-Developer-Tools/mcp-server && npm install && npm run build</code></span></li>
           
-          <li><span>Open the folder in <strong>Cursor IDE</strong></span></li>
+          <li><span><strong>Get Plaid credentials:</strong> Sign up at <a href="https://dashboard.plaid.com/signup" target="_blank">dashboard.plaid.com</a> and get your <code>client_id</code> and <code>secret</code> for the sandbox environment.</span></li>
           
-          <li><span>Install MCP server: <code>cd mcp-server && npm install</code></span></li>
+          <li><span><strong>Set environment variables:</strong><br><code>cp .env.example .env</code><br>Edit <code>.env</code> with your <code>PLAID_CLIENT_ID</code>, <code>PLAID_SECRET</code>, and <code>PLAID_ENV=sandbox</code>.</span></li>
           
-          <li><span>Set your Plaid credentials: <code>PLAID_CLIENT_ID</code> and <code>PLAID_SECRET</code></span></li>
+          <li><span><strong>Add to Cursor MCP config</strong> (<code>.cursor/mcp.json</code>):<br><code>{"mcpServers":{"plaid":{"command":"node","args":["mcp-server/dist/index.js"],"env":{"PLAID_CLIENT_ID":"YOUR_CLIENT_ID","PLAID_SECRET":"YOUR_SECRET","PLAID_ENV":"sandbox"}}}}</code></span></li>
           
-          <li><span>Start using the 17 AI skills and 30 MCP tools</span></li>
+          <li><span>Open your fintech project in Cursor. All 17 skills, 7 rules, and 30 MCP tools are ready. Start with sandbox mode - switch <code>PLAID_ENV</code> to <code>development</code> or <code>production</code> when ready.</span></li>
           
         </ol>
       </div>
