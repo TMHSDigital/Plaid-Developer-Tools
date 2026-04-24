@@ -1,6 +1,7 @@
 ---
 name: plaid-account-verification
 description: Verify bank accounts using Plaid Auth, micro-deposits, same-day micro-deposits, and database match. Use when the user needs account and routing numbers or ACH payment verification.
+standards-version: 1.6.3
 ---
 
 # Plaid Account Verification

@@ -1,6 +1,7 @@
 ---
 name: plaid-recurring-detection
 description: Detect recurring transactions using the /transactions/recurring endpoint. Covers frequency detection, subscription identification, and recurring stream management.
+standards-version: 1.6.3
 ---
 
 # Plaid Recurring Detection

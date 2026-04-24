@@ -1,6 +1,7 @@
 ---
 name: plaid-transaction-sync
 description: Implement Plaid's /transactions/sync endpoint for cursor-based transaction pagination. Covers added/modified/removed handling, cursor persistence, deduplication, and the has_more loop. Use when the user needs to fetch or sync transactions.
+standards-version: 1.6.3
 ---
 
 # Plaid Transaction Sync

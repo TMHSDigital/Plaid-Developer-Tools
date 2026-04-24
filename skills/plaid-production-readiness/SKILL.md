@@ -1,6 +1,7 @@
 ---
 name: plaid-production-readiness
 description: Prepare a Plaid integration for production access including the application process, compliance checklist, and sandbox to development to production migration path.
+standards-version: 1.6.3
 ---
 
 # Plaid Production Readiness

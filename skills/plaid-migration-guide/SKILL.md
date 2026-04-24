@@ -1,6 +1,7 @@
 ---
 name: plaid-migration-guide
 description: Migrate from Yodlee, MX, Finicity, or other aggregators to Plaid. Covers data mapping, institution coverage comparison, and migration strategies.
+standards-version: 1.6.3
 ---
 
 # Plaid Migration Guide

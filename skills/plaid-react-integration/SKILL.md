@@ -1,6 +1,7 @@
 ---
 name: plaid-react-integration
 description: Integrate Plaid Link into React apps using react-plaid-link hooks, error boundaries, loading states, and context providers. Use when the user is building a React frontend with Plaid.
+standards-version: 1.6.3
 ---
 
 # Plaid React Integration
