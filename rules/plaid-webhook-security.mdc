@@ -7,6 +7,7 @@ globs:
   - "**/webhook*.tsx"
   - "**/webhook*.jsx"
   - "**/*plaid*webhook*"
+standards-version: 1.6.3
 ---
 
 # Plaid Webhook Security

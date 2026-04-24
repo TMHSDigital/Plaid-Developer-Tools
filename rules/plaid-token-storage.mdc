@@ -6,6 +6,7 @@ globs:
   - "**/*.js"
   - "**/*.tsx"
   - "**/*.jsx"
+standards-version: 1.6.3
 ---
 
 # Plaid Token Storage
