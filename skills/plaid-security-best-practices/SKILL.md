@@ -1,7 +1,7 @@
 ---
 name: plaid-security-best-practices
 description: Secure Plaid integrations with token encryption, RLS patterns, access token rotation, audit logging, and least-privilege access. Use when the user needs to harden their Plaid implementation.
-standards-version: 1.6.3
+standards-version: 1.7.0
 ---
 
 # Plaid Security Best Practices

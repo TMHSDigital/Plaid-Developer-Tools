@@ -1,7 +1,7 @@
 ---
 name: plaid-category-mapping
 description: Map Plaid personal finance categories to your application's taxonomy. Covers the primary/detailed hierarchy, building custom mapping layers, and common category use cases. Use when the user needs to categorize or display transaction categories.
-standards-version: 1.6.3
+standards-version: 1.7.0
 ---
 
 # Plaid Category Mapping
