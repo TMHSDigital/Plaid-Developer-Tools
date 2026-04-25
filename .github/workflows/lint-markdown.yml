@@ -22,7 +22,7 @@ jobs:
             grep -oP '\[.*?\]\(\K[^)]+' "$file" | while read -r link; do
               # skip URLs, anchors, and badge images
               case "$link" in
-                http*|https*|#*|*.svg*|*.shields.io*) continue ;;
+                "http*"|"https*"|"#*"|"*.svg*"|"*.shields.io*") continue ;;
               esac
               # strip anchor from path
               path="${link%%#*}"
