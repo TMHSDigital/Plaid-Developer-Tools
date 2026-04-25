@@ -12,7 +12,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Check for broken relative links
         run: |
@@ -61,7 +61,7 @@ jobs:
           files=$(find . -name '*.md' -not -path './node_modules/*' -not -path './mcp-server/node_modules/*')
           found=0
           for f in $files; do
-            if grep -Pn '—' "$f"; then
+            if grep -Pn 'â€”' "$f"; then
               echo "  ^ em dash in $f"
               found=$((found + 1))
             fi
