@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: 'pip'
@@ -58,13 +58,13 @@ jobs:
           SERVER_PID=$!
           sleep 2
           if kill -0 "$SERVER_PID" 2>/dev/null; then
-            echo "Server still running after 2s — smoke test passed."
+            echo "Server still running after 2s â€” smoke test passed."
             kill "$SERVER_PID" 2>/dev/null || true
             wait "$SERVER_PID" 2>/dev/null || true
           else
             wait "$SERVER_PID" 2>/dev/null || code=$?
             if [ "${code:-0}" -eq 124 ]; then
-              echo "Server ran until timeout — smoke test passed."
+              echo "Server ran until timeout â€” smoke test passed."
             else
               echo "Server exited early with code ${code:-0}"
               exit 1
