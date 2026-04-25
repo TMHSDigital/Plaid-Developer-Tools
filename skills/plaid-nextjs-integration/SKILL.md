@@ -1,7 +1,7 @@
 ---
 name: plaid-nextjs-integration
 description: Integrate Plaid into Next.js apps with App Router API routes, middleware auth, server-side token exchange, and webhook route handlers. Use when the user is building a Next.js app with Plaid.
-standards-version: 1.6.3
+standards-version: 1.7.0
 ---
 
 # Plaid Next.js Integration

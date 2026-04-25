@@ -1,7 +1,7 @@
 ---
 name: plaid-identity-verification
 description: Implement Plaid Identity and Identity Verification products for KYC flows, document verification, and match scores. Use when the user needs to verify account holder identity.
-standards-version: 1.6.3
+standards-version: 1.7.0
 ---
 
 # Plaid Identity Verification
