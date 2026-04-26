@@ -1,7 +1,7 @@
 ---
 name: plaid-webhook-handling
 description: Handle Plaid webhooks including verification, all webhook types and codes, sandbox webhook firing, retry logic, and idempotent processing. Use when the user needs to receive and process Plaid webhook events.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Webhook Handling

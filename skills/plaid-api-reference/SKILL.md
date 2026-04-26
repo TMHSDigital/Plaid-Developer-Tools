@@ -1,7 +1,7 @@
 ---
 name: plaid-api-reference
 description: Search and retrieve Plaid API endpoint documentation including parameters, authentication requirements, response shapes, and rate limits. Use when the user needs to call a Plaid API or wants to know available endpoints.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid API Reference

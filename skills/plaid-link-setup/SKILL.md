@@ -1,7 +1,7 @@
 ---
 name: plaid-link-setup
 description: Integrate Plaid Link into web and mobile apps using react-plaid-link, token exchange, OAuth redirect handling, update mode, and multi-item flows. Use when the user needs to connect bank accounts via Plaid Link.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Link Setup

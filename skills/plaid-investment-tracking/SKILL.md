@@ -1,7 +1,7 @@
 ---
 name: plaid-investment-tracking
 description: Track investment holdings, securities, and transactions using the Plaid Investments product. Covers holdings retrieval, security details, cost basis, and supported brokerages.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Investment Tracking
