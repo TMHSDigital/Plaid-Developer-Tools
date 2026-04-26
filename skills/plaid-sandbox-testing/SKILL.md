@@ -1,7 +1,7 @@
 ---
 name: plaid-sandbox-testing
 description: Test Plaid integrations using the sandbox environment with test credentials, test institutions, custom user scenarios, and error simulation. Use when the user needs to develop or test against Plaid without real bank accounts.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Sandbox Testing

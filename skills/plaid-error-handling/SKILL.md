@@ -1,7 +1,7 @@
 ---
 name: plaid-error-handling
 description: Detect, classify, and recover from Plaid API errors including ITEM_LOGIN_REQUIRED, INVALID_CREDENTIALS, INSTITUTION_NOT_RESPONDING, rate limits, and network failures. Use when the user needs to handle Plaid errors gracefully.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Error Handling

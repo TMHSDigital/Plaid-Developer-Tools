@@ -1,7 +1,7 @@
 ---
 name: plaid-institution-search
 description: Search Plaid institutions by name, routing number, products supported, and country. Use when the user needs to find bank coverage, check institution availability, or look up institution details.
-standards-version: 1.7.0
+standards-version: 1.9.0
 ---
 
 # Plaid Institution Search
